@@ -14,7 +14,7 @@
 
 #include "SerDes/bitstreamSerDes.h"
 #include "MLModelRunner/Utils/Debug.h"
-#include "MLModelRunner/Utils/JSON.h"
+#include "llvm/Support/JSON.h"
 
 #include <cstddef>
 #include <cstdint>

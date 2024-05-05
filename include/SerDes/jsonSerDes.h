@@ -14,8 +14,8 @@
 #ifndef JSON_SERIALIZER_H
 #define JSON_SERIALIZER_H
 
-#include "MLModelRunner/Utils/JSON.h"
 #include "SerDes/baseSerDes.h"
+#include "llvm/Support/JSON.h"
 #include <string>
 #include <utility>
 

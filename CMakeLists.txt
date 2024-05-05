@@ -7,6 +7,12 @@ find_package(Protobuf CONFIG REQUIRED)
 set(protobuf_MODULE_COMPATIBLE TRUE)
 find_package(Protobuf CONFIG REQUIRED)
 
+set(CMAKE_MODULE_PATH
+  "${CMAKE_CURRENT_SOURCE_DIR}/cmake"
+  "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules"
+  ${CMAKE_MODULE_PATH}
+  )
+message("CMAKE Module path: ${CMAKE_MODULE_PATH}")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib CACHE PATH "Output directory for static libraries")
 
 include_directories(${Protobuf_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -36,17 +42,20 @@ if(MLBRIDGE_DEBUG_MODE)
   add_compile_definitions(DEBUG_MODE)
 endif()
 
+if(LLVM_MLBRIDGE)
+  include(AddLLVM)
+  include(HandleLLVMOptions)
+  include(LLVMDistributionSupport)
+endif()
+
 add_subdirectory(MLModelRunner)
 add_subdirectory(SerDes)
 if(MLBRIDGE_ENABLE_TEST)
   add_subdirectory(test)
 endif()
 
-if(LLVM_MLBRIDGE)
-  include(AddLLVM)
-  include(HandleLLVMOptions)
-  include(LLVMDistributionSupport)
 
+if(LLVM_MLBRIDGE)
   add_llvm_library(LLVMMLBridge
   tools.cpp
 

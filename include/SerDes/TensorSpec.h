@@ -11,11 +11,11 @@
 #ifndef MLBRIDGE_TENSORSPEC_H
 #define MLBRIDGE_TENSORSPEC_H
 
-#include "MLModelRunner/Utils/JSON.h"
+#include "llvm/ADT/Optional.h"
 #include "llvm/IR/LLVMContext.h"
+#include "llvm/Support/JSON.h"
 #include <memory>
 #include <numeric>
-#include <optional>
 #include <vector>
 
 namespace MLBridge {
@@ -116,8 +116,8 @@ std::string tensorValueToString(const char *Buffer, const TensorSpec &Spec);
 ///   "shape": <array of ints> }
 /// For the "type" field, see the C++ primitive types used in
 /// TFUTILS_SUPPORTED_TYPES.
-std::optional<TensorSpec> getTensorSpecFromJSON(llvm::LLVMContext &Ctx,
-                                                const llvm::json::Value &Value);
+llvm::Optional<TensorSpec>
+getTensorSpecFromJSON(llvm::LLVMContext &Ctx, const llvm::json::Value &Value);
 
 #define TFUTILS_GETDATATYPE_DEF(T, Name)                                       \
   template <> TensorType TensorSpec::getDataType<T>();
