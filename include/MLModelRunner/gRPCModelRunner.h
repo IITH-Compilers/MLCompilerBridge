@@ -70,6 +70,7 @@
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 #include <memory>
+#include <thread>
 
 namespace MLBridge {
 /// This class is used to create the grpc model runner object. grpc model runner
@@ -81,8 +82,7 @@ public:
   /// For server mode
   gRPCModelRunner(std::string server_address, grpc::Service *s,
                   llvm::LLVMContext *Ctx = nullptr)
-      : MLModelRunner(MLModelRunner::Kind::gRPC, BaseSerDes::Kind::Protobuf,
-                      Ctx),
+      : MLModelRunner(MLModelRunner::Kind::gRPC, SerDesKind::Protobuf, Ctx),
         server_address(server_address), request(nullptr), response(nullptr),
         server_mode(true) {
     RunService(s);
@@ -91,8 +91,7 @@ public:
   /// For client mode
   gRPCModelRunner(std::string server_address, Request *request,
                   Response *response, llvm::LLVMContext *Ctx = nullptr)
-      : MLModelRunner(MLModelRunner::Kind::gRPC, BaseSerDes::Kind::Protobuf,
-                      Ctx),
+      : MLModelRunner(MLModelRunner::Kind::gRPC, SerDesKind::Protobuf, Ctx),
         server_address(server_address), request(request), response(response),
         server_mode(false) {
     SetStub();

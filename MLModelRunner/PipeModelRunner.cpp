@@ -31,7 +31,7 @@ using namespace llvm;
 
 namespace MLBridge {
 PipeModelRunner::PipeModelRunner(StringRef OutboundName, StringRef InboundName,
-                                 BaseSerDes::Kind SerDesType, LLVMContext *Ctx)
+                                 SerDesKind SerDesType, LLVMContext *Ctx)
     : MLModelRunner(Kind::Pipe, SerDesType, Ctx),
       InEC(sys::fs::openFileForRead(InboundName, Inbound)) {
   this->InboundName = InboundName.str();

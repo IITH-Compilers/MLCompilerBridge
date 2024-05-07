@@ -84,7 +84,7 @@ public:
   enum class Kind : int { Unknown, Pipe, gRPC, ONNX, TFAOT };
 
   Kind getKind() const { return Type; }
-  BaseSerDes::Kind getSerDesKind() const { return SerDesType; }
+  SerDesKind getSerDesKind() const { return SerDesType; }
 
   virtual void requestExit() = 0;
 
@@ -118,7 +118,7 @@ public:
   void setResponse(void *response) { SerDes->setResponse(response); }
 
 protected:
-  MLModelRunner(Kind Type, BaseSerDes::Kind SerDesType,
+  MLModelRunner(Kind Type, SerDesKind SerDesType,
                 llvm::LLVMContext *Ctx = nullptr)
       : Ctx(Ctx), Type(Type), SerDesType(SerDesType) {
     assert(Type != Kind::Unknown);
@@ -126,7 +126,7 @@ protected:
   }
 
   MLModelRunner(Kind Type, llvm::LLVMContext *Ctx = nullptr)
-      : Ctx(Ctx), Type(Type), SerDesType(BaseSerDes::Kind::Unknown) {
+      : Ctx(Ctx), Type(Type), SerDesType(SerDesKind::Unknown) {
     SerDes = nullptr;
   };
 
@@ -136,7 +136,7 @@ protected:
 
   llvm::LLVMContext *Ctx;
   const Kind Type;
-  const BaseSerDes::Kind SerDesType;
+  const SerDesKind SerDesType;
 
 protected:
   std::unique_ptr<BaseSerDes> SerDes;
@@ -144,21 +144,21 @@ protected:
 private:
   void initSerDes() {
     switch (SerDesType) {
-    case BaseSerDes::Kind::Json:
+    case SerDesKind::Json:
       SerDes = std::make_unique<JsonSerDes>();
       break;
-    case BaseSerDes::Kind::Bitstream:
+    case SerDesKind::Bitstream:
       SerDes = std::make_unique<BitstreamSerDes>();
       break;
 #ifndef C_LIBRARY
-    case BaseSerDes::Kind::Protobuf:
+    case SerDesKind::Protobuf:
       SerDes = std::make_unique<ProtobufSerDes>();
       break;
-    case BaseSerDes::Kind::Tensorflow:
+    case SerDesKind::Tensorflow:
       SerDes = std::make_unique<TensorflowSerDes>();
       break;
 #endif
-    case BaseSerDes::Kind::Unknown:
+    case SerDesKind::Unknown:
       SerDes = nullptr;
       break;
     }

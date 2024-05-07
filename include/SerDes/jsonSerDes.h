@@ -23,10 +23,10 @@ namespace MLBridge {
 /// JsonSerDes - Json Serialization/Deserialization using LLVM's json library.
 class JsonSerDes : public BaseSerDes {
 public:
-  JsonSerDes() : BaseSerDes(BaseSerDes::Kind::Json){};
+  JsonSerDes() : BaseSerDes(SerDesKind::Json){};
 
   static bool classof(const BaseSerDes *S) {
-    return S->getKind() == BaseSerDes::Kind::Json;
+    return S->getKind() == SerDesKind::Json;
   }
 
 #define SET_FEATURE(TYPE, _)                                                   \
