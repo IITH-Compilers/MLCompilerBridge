@@ -6,7 +6,7 @@
 export MY_INSTALL_DIR=$HOME/.local
 mkdir -p $MY_INSTALL_DIR
 export PATH="$MY_INSTALL_DIR/bin:$PATH"
-git clone --recurse-submodules -b v1.34.0 --depth 1 --shallow-submodules https://github.com/grpc/grpc
+git clone --recurse-submodules -b v1.58.0 --depth 1 --shallow-submodules https://github.com/grpc/grpc
 
 cd grpc
 mkdir -p cmake/build
