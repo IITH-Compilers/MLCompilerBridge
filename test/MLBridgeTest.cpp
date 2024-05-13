@@ -29,19 +29,6 @@
   std::cout
 using namespace grpc;
 
-#define gRPCModelRunnerInit(datatype)                                          \
-  increment_port(1);                                                           \
-  MLBridgeTestgRPC_##datatype::Reply response;                                 \
-  MLBridgeTestgRPC_##datatype::Request request;                                \
-  MLRunner = std::make_unique<                                                 \
-      gRPCModelRunner<MLBridgeTestgRPC_##datatype::MLBridgeTestService,        \
-                      MLBridgeTestgRPC_##datatype::MLBridgeTestService::Stub,  \
-                      MLBridgeTestgRPC_##datatype::Request,                    \
-                      MLBridgeTestgRPC_##datatype::Reply>>(                    \
-      server_address, &request, &response, nullptr);                           \
-  MLRunner->setRequest(&request);                                              \
-  MLRunner->setResponse(&response)
-
 static llvm::cl::opt<std::string>
     cl_server_address("test-server-address", llvm::cl::Hidden,
                       llvm::cl::desc("Server address, format <ip>:<port>"),
@@ -64,9 +51,8 @@ static llvm::cl::opt<bool>
            llvm::cl::desc("Only print errors when if set to true"));
 
 namespace {
-std::unique_ptr<MLModelRunner> MLRunner;
 std::string basename;
-BaseSerDes::Kind SerDesType;
+SerDesKind SerDesType;
 
 std::string test_config;
 std::string pipe_name;
@@ -74,11 +60,12 @@ std::string server_address;
 std::string onnx_path;
 
 // send value of type T1. Test received value of type T2 against expected value
-template <typename T1, typename T2>
-void testPrimitive(std::string label, T1 value, T2 expected) {
+template <typename T1, typename T2, typename MLRunnerTy>
+void testPrimitive(MLRunnerTy &MLRunner, std::string label, T1 value,
+                   T2 expected) {
   std::pair<std::string, T1> p("request_" + label, value);
   MLRunner->populateFeatures(p);
-  T2 out = MLRunner->evaluate<T2>();
+  T2 out = MLRunner->template evaluate<T2>();
   debug_out << "  " << label << " reply: " << out << "\n";
   if (std::abs(out - expected) > 10e-6) {
     std::cerr << "Error: Expected " << label << " reply: " << expected
@@ -87,14 +74,14 @@ void testPrimitive(std::string label, T1 value, T2 expected) {
   }
 }
 
-template <typename T1, typename T2>
-void testVector(std::string label, std::vector<T1> value,
+template <typename T1, typename T2, typename MLRunnerTy>
+void testVector(MLRunnerTy &MLRunner, std::string label, std::vector<T1> value,
                 std::vector<T2> expected) {
   std::pair<std::string, std::vector<T1>> p("request_" + label, value);
   MLRunner->populateFeatures(p);
   T2 *out;
   size_t size;
-  MLRunner->evaluate<T2 *>(out, size);
+  MLRunner->template evaluate<T2 *>(out, size);
   std::vector<T2> reply(out, out + size);
   debug_out << "  " << label << " reply: ";
   int i = 0;
@@ -117,22 +104,22 @@ int testPipeBytes() {
     exit(1);
   }
   basename = "./" + pipe_name;
-  SerDesType = BaseSerDes::Kind::Bitstream;
-  MLRunner = std::make_unique<PipeModelRunner>(
+  SerDesType = SerDesKind::Bitstream;
+  auto MLRunner = std::make_unique<PipeModelRunner>(
       basename + ".out", basename + ".in", SerDesType, nullptr);
-  testPrimitive<int, int>("int", 11, 12);
-  testPrimitive<long, long>("long", 1234567890, 1234567891);
-  testPrimitive<float, float>("float", 3.14, 4.14);
-  testPrimitive<double, double>("double", 0.123456789123456789,
+  testPrimitive<int, int>(MLRunner, "int", 11, 12);
+  testPrimitive<long, long>(MLRunner, "long", 1234567890, 1234567891);
+  testPrimitive<float, float>(MLRunner, "float", 3.14, 4.14);
+  testPrimitive<double, double>(MLRunner, "double", 0.123456789123456789,
                                 1.123456789123456789);
-  testPrimitive<char, char>("char", 'a', 'b');
-  testPrimitive<bool, bool>("bool", true, false);
-  testVector<int, int>("vec_int", {11, 22, 33}, {12, 23, 34});
-  testVector<long, long>("vec_long", {123456780, 222, 333},
+  testPrimitive<char, char>(MLRunner, "char", 'a', 'b');
+  testPrimitive<bool, bool>(MLRunner, "bool", true, false);
+  testVector<int, int>(MLRunner, "vec_int", {11, 22, 33}, {12, 23, 34});
+  testVector<long, long>(MLRunner, "vec_long", {123456780, 222, 333},
                          {123456780, 123456781, 123456782});
-  testVector<float, float>("vec_float", {11.1, 22.2, 33.3},
+  testVector<float, float>(MLRunner, "vec_float", {11.1, 22.2, 33.3},
                            {1.11, 2.22, -3.33, 0});
-  testVector<double, double>("vec_double",
+  testVector<double, double>(MLRunner, "vec_double",
                              {-1.1111111111, -2.2222222222, -3.3333333333},
                              {1.12345678912345670, -1.12345678912345671});
   return 0;
@@ -145,22 +132,22 @@ int testPipeJSON() {
     exit(1);
   }
   basename = "./" + pipe_name;
-  SerDesType = BaseSerDes::Kind::Json;
-  MLRunner = std::make_unique<PipeModelRunner>(
+  SerDesType = SerDesKind::Json;
+  auto MLRunner = std::make_unique<PipeModelRunner>(
       basename + ".out", basename + ".in", SerDesType, nullptr);
-  testPrimitive<int, IntegerType>("int", 11, 12);
-  testPrimitive<long, IntegerType>("long", 1234567890, 12345);
-  testPrimitive<float, RealType>("float", 3.14, 4.14);
-  testPrimitive<double, RealType>("double", 0.123456789123456789,
+  testPrimitive<int, IntegerType>(MLRunner, "int", 11, 12);
+  testPrimitive<long, IntegerType>(MLRunner, "long", 1234567890, 12345);
+  testPrimitive<float, RealType>(MLRunner, "float", 3.14, 4.14);
+  testPrimitive<double, RealType>(MLRunner, "double", 0.123456789123456789,
                                   1.123456789123456789);
-  testPrimitive<char, char>("char", 'a', 'b');
-  testPrimitive<bool, bool>("bool", true, false);
-  testVector<int, IntegerType>("vec_int", {11, 22, 33}, {12, 23, 34});
-  testVector<long, IntegerType>("vec_long", {123456780, 222, 333},
+  testPrimitive<char, char>(MLRunner, "char", 'a', 'b');
+  testPrimitive<bool, bool>(MLRunner, "bool", true, false);
+  testVector<int, IntegerType>(MLRunner, "vec_int", {11, 22, 33}, {12, 23, 34});
+  testVector<long, IntegerType>(MLRunner, "vec_long", {123456780, 222, 333},
                                 {6780, 6781, 6782});
-  testVector<float, RealType>("vec_float", {11.1, 22.2, 33.3},
+  testVector<float, RealType>(MLRunner, "vec_float", {11.1, 22.2, 33.3},
                               {1.11, 2.22, -3.33, 0});
-  testVector<double, RealType>("vec_double",
+  testVector<double, RealType>(MLRunner, "vec_double",
                                {-1.1111111111, -2.2222222222, -3.3333333333},
                                {1.12345678912345670, -1.12345678912345671});
   return 0;
@@ -174,6 +161,19 @@ void increment_port(int delta) {
 }
 
 int testGRPC() {
+#define gRPCModelRunnerInit(datatype)                                          \
+  increment_port(1);                                                           \
+  MLBridgeTestgRPC_##datatype::Reply response;                                 \
+  MLBridgeTestgRPC_##datatype::Request request;                                \
+  auto MLRunner = std::make_unique<                                            \
+      gRPCModelRunner<MLBridgeTestgRPC_##datatype::MLBridgeTestService,        \
+                      MLBridgeTestgRPC_##datatype::MLBridgeTestService::Stub,  \
+                      MLBridgeTestgRPC_##datatype::Request,                    \
+                      MLBridgeTestgRPC_##datatype::Reply>>(                    \
+      server_address, &request, &response, nullptr);                           \
+  MLRunner->setRequest(&request);                                              \
+  MLRunner->setResponse(&response)
+
   if (server_address == "") {
     std::cerr << "Server Address must be specified via "
                  "--test-server-address=\"<ip>:<port>\"\n";
@@ -181,46 +181,47 @@ int testGRPC() {
   }
   {
     gRPCModelRunnerInit(int);
-    testPrimitive<int, int>("int", 11, 12);
+    testPrimitive<int, int>(MLRunner, "int", 11, 12);
   }
   {
     gRPCModelRunnerInit(long);
-    testPrimitive<long, long>("long", 1234567890, 1234567891);
+    testPrimitive<long, long>(MLRunner, "long", 1234567890, 1234567891);
   }
   {
     gRPCModelRunnerInit(float);
-    testPrimitive<float, float>("float", 3.14, 4.14);
+    testPrimitive<float, float>(MLRunner, "float", 3.14, 4.14);
   }
   {
     gRPCModelRunnerInit(double);
-    testPrimitive<double, double>("double", 0.123456789123456789,
+    testPrimitive<double, double>(MLRunner, "double", 0.123456789123456789,
                                   1.123456789123456789);
   }
   increment_port(1);
   {
     gRPCModelRunnerInit(bool);
-    testPrimitive<bool, bool>("bool", true, false);
+    testPrimitive<bool, bool>(MLRunner, "bool", true, false);
   }
   {
     gRPCModelRunnerInit(vec_int);
-    testVector<int, int>("vec_int", {11, 22, 33}, {12, 23, 34});
+    testVector<int, int>(MLRunner, "vec_int", {11, 22, 33}, {12, 23, 34});
   }
   {
     gRPCModelRunnerInit(vec_long);
-    testVector<long, long>("vec_long", {123456780, 222, 333},
+    testVector<long, long>(MLRunner, "vec_long", {123456780, 222, 333},
                            {123456780, 123456781, 123456782});
   }
   {
     gRPCModelRunnerInit(vec_float);
-    testVector<float, float>("vec_float", {11.1, 22.2, 33.3},
+    testVector<float, float>(MLRunner, "vec_float", {11.1, 22.2, 33.3},
                              {1.11, 2.22, -3.33, 0});
   }
   {
     gRPCModelRunnerInit(vec_double);
-    testVector<double, double>("vec_double",
+    testVector<double, double>(MLRunner, "vec_double",
                                {-1.1111111111, -2.2222222222, -3.3333333333},
                                {1.12345678912345670, -1.12345678912345671});
   }
+#undef gRPCModelRunnerInit
   return 0;
 }
 
@@ -243,7 +244,7 @@ public:
     Agent *agent = new Agent(onnx_path);
     std::map<std::string, Agent *> agents;
     agents["agent"] = agent;
-    MLRunner = std::make_unique<ONNXModelRunner>(this, agents, nullptr);
+    auto MLRunner = std::make_unique<ONNXModelRunner>(this, agents, nullptr);
     MLRunner->evaluate<int>();
     if (lastAction != expectedAction) {
       std::cerr << "Error: Expected action: " << expectedAction
