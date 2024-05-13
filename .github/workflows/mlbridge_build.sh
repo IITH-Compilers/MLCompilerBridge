@@ -14,9 +14,12 @@ pushd cmake/build
 cmake -DgRPC_INSTALL=ON \
 	-DgRPC_BUILD_TESTS=OFF \
 	-DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR \
+	-DABSL_PROPAGATE_CXX_STD=OFF \
+	-DCMAKE_CXX_STANDARD=17 \
+	-G Ninja \
 	../..
-make -j
-make install
+ninja
+ninja install
 popd
 
 # Setup ONNXRuntime
@@ -35,7 +38,7 @@ if [[ -z "$BUILD" ]]; then
 fi
 
 cmake \
-	-G "Unix Makefiles" \
+	-G Ninja \
 	-S $REPO_DIR \
 	-B $REPO_DIR/build_${BUILD,,} \
 	-DONNXRUNTIME_ROOTDIR=$HOME/onnxruntime-linux-x64-1.16.3 \
@@ -46,4 +49,5 @@ cmake \
 	-DPYTHON_UTILITIES_DIRECTORY=$REPO_DIR/test \
 	-DMLBRIDGE_ENABLE_TEST=ON
 
-make -j -C $REPO_DIR/build_${BUILD,,} install
+cd $REPO_DIR/build_${BUILD,,}
+ninja install
