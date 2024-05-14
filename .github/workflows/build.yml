@@ -33,7 +33,7 @@ jobs:
         activate-environment: mlbridge
         environment-file: mlbridge.yml
     - name: Install other dependencies and build
-      run: bash .github/workflows/mlbridge_build.sh release
+      run: bash .github/workflows/mlbridge_build.sh Release
     - name: Setup Conda dependencies
       uses: conda-incubator/setup-miniconda@v2
       with:

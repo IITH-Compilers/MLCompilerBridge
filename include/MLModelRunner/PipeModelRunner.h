@@ -55,7 +55,7 @@ namespace MLBridge {
 class PipeModelRunner : public MLModelRunner {
 public:
   PipeModelRunner(llvm::StringRef OutboundName, llvm::StringRef InboundName,
-                  BaseSerDes::Kind Kind, llvm::LLVMContext *Ctx = nullptr);
+                  SerDesKind Kind, llvm::LLVMContext *Ctx = nullptr);
 
   static bool classof(const MLModelRunner *R) {
     return R->getKind() == MLModelRunner::Kind::Pipe;

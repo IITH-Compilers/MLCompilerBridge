@@ -34,8 +34,7 @@ public:
   TFModelRunner(llvm::StringRef DecisionName, llvm::LLVMContext &Ctx,
                 llvm::StringRef FeedPrefix = "feed_",
                 llvm::StringRef FetchPrefix = "fetch_")
-      : MLModelRunner(MLModelRunner::Kind::TFAOT, BaseSerDes::Kind::Tensorflow,
-                      &Ctx),
+      : MLModelRunner(MLModelRunner::Kind::TFAOT, SerDesKind::Tensorflow, &Ctx),
         CompiledModel(std::make_unique<TGen>()) {
 
     SerDes->setRequest(CompiledModel.get());
@@ -49,7 +48,7 @@ public:
   TFModelRunner(llvm::StringRef DecisionName,
                 llvm::StringRef FeedPrefix = "feed_",
                 llvm::StringRef FetchPrefix = "fetch_")
-      : MLModelRunner(MLModelRunner::Kind::TFAOT, BaseSerDes::Kind::Tensorflow),
+      : MLModelRunner(MLModelRunner::Kind::TFAOT, SerDesKind::Tensorflow),
         CompiledModel(std::make_unique<TGen>()) {
 
     SerDes->setRequest(CompiledModel.get());

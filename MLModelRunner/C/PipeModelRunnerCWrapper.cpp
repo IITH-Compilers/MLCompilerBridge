@@ -27,8 +27,8 @@ PipeModelRunnerWrapper *createPipeModelRunner(const char *OutboundName,
                                               const char *InboundName,
                                               int SerDesType) {
   PipeModelRunnerWrapper *obj = new PipeModelRunnerWrapper();
-  obj->model = new PipeModelRunner(OutboundName, InboundName,
-                                   (BaseSerDes::Kind)SerDesType);
+  obj->model =
+      new PipeModelRunner(OutboundName, InboundName, (SerDesKind)SerDesType);
   return obj;
 }
 

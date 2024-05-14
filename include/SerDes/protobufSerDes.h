@@ -25,10 +25,10 @@ namespace MLBridge {
 /// communication.
 class ProtobufSerDes : public BaseSerDes {
 public:
-  ProtobufSerDes() : BaseSerDes(Kind::Protobuf){};
+  ProtobufSerDes() : BaseSerDes(SerDesKind::Protobuf){};
 
   static bool classof(const BaseSerDes *S) {
-    return S->getKind() == BaseSerDes::Kind::Protobuf;
+    return S->getKind() == SerDesKind::Protobuf;
   }
 
   void setRequest(void *Request) override;

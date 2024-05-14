@@ -27,8 +27,8 @@ Please see [here](https://iith-compilers.github.io/ML-Compiler-Bridge/) for docu
 * GNU Make (4.2.1)
 * LLVM (10.X) - [src](https://github.com/llvm/llvm-project/tree/release/10.x), [release](https://releases.llvm.org/download.html#10.0.1)
 * Python (3.10), C++17
-* gRPC v1.34 and protobuf v3.13 - for gRPC Model Runner
-    * Building GRPC from Source: Please follow [`Build GRPC with cmake`](https://grpc.io/docs/languages/cpp/quickstart/) v1.34 (protobuf v3.13) to build GRPC from source.
+* gRPC v1.58 and protobuf v23.4 - for gRPC Model Runner
+    * Building GRPC from Source: Please follow [`Build GRPC with cmake`](https://grpc.io/docs/languages/cpp/quickstart/) v1.58 (protobuf v23.4) to build GRPC from source.
     * In the above tutorial setting `DCMAKE_INSTALL_PREFIX` may not be necessary and the default install prefix can be used.
     * The following dependencies will be required for Python: `pip install grpcio-tools`.
 * [ONNXRuntime](https://github.com/microsoft/onnxruntime/releases) v1.13.1

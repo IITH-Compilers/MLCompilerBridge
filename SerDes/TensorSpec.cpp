@@ -15,9 +15,10 @@
 //===----------------------------------------------------------------------===//
 
 #include "SerDes/TensorSpec.h"
-#include "MLModelRunner/Utils/JSON.h"
+#include "llvm/ADT/None.h"
 #include "llvm/ADT/StringExtras.h"
 #include "llvm/Support/Debug.h"
+#include "llvm/Support/JSON.h"
 
 #include <array>
 #include <cassert>
@@ -64,19 +65,23 @@ TensorSpec::TensorSpec(const std::string &Name, int Port, TensorType Type,
                                    std::multiplies<int64_t>())),
       ElementSize(ElementSize) {}
 
-std::optional<TensorSpec> getTensorSpecFromJSON(LLVMContext &Ctx,
-                                                const json::Value &Value) {
+llvm::Optional<TensorSpec> getTensorSpecFromJSON(LLVMContext &Ctx,
+                                                 const json::Value &Value) {
   auto EmitError =
-      [&](const llvm::Twine &Message) -> std::optional<TensorSpec> {
+      [&](const llvm::Twine &Message) -> llvm::Optional<TensorSpec> {
     std::string S;
     llvm::raw_string_ostream OS(S);
     OS << Value;
     Ctx.emitError("Unable to parse JSON Value as spec (" + Message + "): " + S);
-    return std::nullopt;
+    return None;
   };
-  // FIXME: accept a Path as a parameter, and use it for error reporting.
+// FIXME: accept a Path as a parameter, and use it for error reporting.
+#ifdef LLVM_MLBRIDGE
   json::Path::Root Root("tensor_spec");
   json::ObjectMapper Mapper(Value, Root);
+#else
+  json::ObjectMapper Mapper(Value);
+#endif
   if (!Mapper)
     return EmitError("Value is not a dict");
 
@@ -99,7 +104,7 @@ std::optional<TensorSpec> getTensorSpecFromJSON(LLVMContext &Ctx,
     return TensorSpec::createSpec<T>(TensorName, TensorShape, TensorPort);
   SUPPORTED_TENSOR_TYPES(PARSE_TYPE)
 #undef PARSE_TYPE
-  return std::nullopt;
+  return None;
 }
 
 std::string tensorValueToString(const char *Buffer, const TensorSpec &Spec) {

@@ -28,7 +28,7 @@ namespace MLBridge {
 /// information followed by the raw data.
 class BitstreamSerDes : public BaseSerDes {
 public:
-  BitstreamSerDes() : BaseSerDes(Kind::Bitstream) {
+  BitstreamSerDes() : BaseSerDes(SerDesKind::Bitstream) {
     Buffer = "";
     tensorSpecs = std::vector<TensorSpec>();
     rawData = std::vector<const void *>();

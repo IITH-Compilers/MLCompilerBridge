@@ -21,10 +21,10 @@ namespace MLBridge {
 /// TensorflowSerDes - Serialization/Deserialization to support TF AOT models.
 class TensorflowSerDes : public BaseSerDes {
 public:
-  TensorflowSerDes() : BaseSerDes(Kind::Tensorflow) {}
+  TensorflowSerDes() : BaseSerDes(SerDesKind::Tensorflow) {}
 
   static bool classof(const BaseSerDes *S) {
-    return S->getKind() == BaseSerDes::Kind::Tensorflow;
+    return S->getKind() == SerDesKind::Tensorflow;
   }
 
 #define SET_FEATURE(TYPE, _)                                                   \

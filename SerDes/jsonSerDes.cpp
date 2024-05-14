@@ -15,9 +15,9 @@
 #include "SerDes/jsonSerDes.h"
 #include "MLModelRunner/Utils/DataTypes.h"
 #include "MLModelRunner/Utils/Debug.h"
-#include "MLModelRunner/Utils/JSON.h"
 #include "SerDes/baseSerDes.h"
 #include "llvm/Support/Debug.h"
+#include "llvm/Support/JSON.h"
 #include <cstdint>
 #include <string>
 
@@ -62,12 +62,12 @@ void *JsonSerDes::desJson(json::Value *V) {
   case json::Value::Kind::Number: {
     if (auto x = V->getAsInteger()) {
       IntegerType *ret = new IntegerType();
-      *ret = x.value();
+      *ret = x.getValue();
       this->MessageLength = sizeof(IntegerType);
       return ret;
     } else if (auto x = V->getAsNumber()) {
       RealType *ret = new RealType();
-      *ret = x.value();
+      *ret = x.getValue();
       this->MessageLength = sizeof(RealType);
       return ret;
     } else {
@@ -83,7 +83,7 @@ void *JsonSerDes::desJson(json::Value *V) {
   }
   case json::Value::Kind::Boolean: {
     bool *ret = new bool();
-    *ret = V->getAsBoolean().value();
+    *ret = V->getAsBoolean().getValue();
     this->MessageLength = sizeof(bool);
     return ret;
   }
@@ -100,14 +100,14 @@ void *JsonSerDes::desJson(json::Value *V) {
       if (auto x = first->getAsInteger()) {
         std::vector<IntegerType> *ret = new std::vector<IntegerType>();
         for (auto it : *arr) {
-          ret->push_back(it.getAsInteger().value());
+          ret->push_back(it.getAsInteger().getValue());
         }
         this->MessageLength = ret->size() * sizeof(IntegerType);
         return ret->data();
       } else if (auto x = first->getAsNumber()) {
         std::vector<RealType> *ret = new std::vector<RealType>();
         for (auto it : *arr) {
-          ret->push_back(it.getAsNumber().value());
+          ret->push_back(it.getAsNumber().getValue());
         }
         this->MessageLength = ret->size() * sizeof(RealType);
         return ret->data();
@@ -127,7 +127,7 @@ void *JsonSerDes::desJson(json::Value *V) {
     case json::Value::Kind::Boolean: {
       std::vector<uint8_t> *ret = new std::vector<uint8_t>();
       for (auto it : *arr) {
-        ret->push_back(it.getAsBoolean().value());
+        ret->push_back(it.getAsBoolean().getValue());
       }
       this->MessageLength = ret->size() * sizeof(uint8_t);
       return ret->data();
