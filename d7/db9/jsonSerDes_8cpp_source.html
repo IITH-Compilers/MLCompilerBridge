@@ -96,15 +96,15 @@ $(function() { codefold.init(1); });
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="../../d2/dd2/jsonSerDes_8h.html">SerDes/jsonSerDes.h</a>&quot;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="../../d2/d12/DataTypes_8h.html">MLModelRunner/Utils/DataTypes.h</a>&quot;</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="../../d4/deb/Debug_8h.html">MLModelRunner/Utils/Debug.h</a>&quot;</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;<a class="code" href="../../d2/d43/JSON_8h.html">MLModelRunner/Utils/JSON.h</a>&quot;</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;<a class="code" href="../../d2/d15/baseSerDes_8h.html">SerDes/baseSerDes.h</a>&quot;</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;llvm/Support/Debug.h&quot;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;<a class="code" href="../../d2/d15/baseSerDes_8h.html">SerDes/baseSerDes.h</a>&quot;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;llvm/Support/Debug.h&quot;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;llvm/Support/JSON.h&quot;</span></div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="../../d7/db9/jsonSerDes_8cpp.html#ad78e062f62e0d6e453941fb4ca843e4d">   24</a></span><span class="preprocessor">#define DEBUG_TYPE &quot;json-serdes&quot;</span></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">using namespace </span><a class="code hl_namespace" href="../../d9/d4a/namespacellvm.html">llvm</a>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">using namespace </span>llvm;</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../d5/d9c/namespaceMLBridge.html">MLBridge</a> {</div>
 <div class="foldopen" id="foldopen00029" data-start="{" data-end="}">
@@ -148,12 +148,12 @@ $(function() { codefold.init(1); });
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  <span class="keywordflow">case</span> json::Value::Kind::Number: {</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keywordflow">if</span> (<span class="keyword">auto</span> x = V-&gt;getAsInteger()) {</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>      <a class="code hl_typedef" href="../../d5/d9c/namespaceMLBridge.html#a7e5fd396c78a607618c713eeca1ed7a5">IntegerType</a> *ret = <span class="keyword">new</span> <a class="code hl_typedef" href="../../d5/d9c/namespaceMLBridge.html#a7e5fd396c78a607618c713eeca1ed7a5">IntegerType</a>();</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>      *ret = x.value();</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>      *ret = x.getValue();</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>      this-&gt;<a class="code hl_variable" href="../../df/d69/classMLBridge_1_1BaseSerDes.html#aca7e98198831ec27d302c89caa28766c">MessageLength</a> = <span class="keyword">sizeof</span>(<a class="code hl_typedef" href="../../d5/d9c/namespaceMLBridge.html#a7e5fd396c78a607618c713eeca1ed7a5">IntegerType</a>);</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>      <span class="keywordflow">return</span> ret;</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<span class="keyword">auto</span> x = V-&gt;getAsNumber()) {</div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>      <a class="code hl_typedef" href="../../d5/d9c/namespaceMLBridge.html#a0668a6fa22d01153981270c70d635395">RealType</a> *ret = <span class="keyword">new</span> <a class="code hl_typedef" href="../../d5/d9c/namespaceMLBridge.html#a0668a6fa22d01153981270c70d635395">RealType</a>();</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>      *ret = x.value();</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>      *ret = x.getValue();</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>      this-&gt;<a class="code hl_variable" href="../../df/d69/classMLBridge_1_1BaseSerDes.html#aca7e98198831ec27d302c89caa28766c">MessageLength</a> = <span class="keyword">sizeof</span>(<a class="code hl_typedef" href="../../d5/d9c/namespaceMLBridge.html#a0668a6fa22d01153981270c70d635395">RealType</a>);</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>      <span class="keywordflow">return</span> ret;</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    } <span class="keywordflow">else</span> {</div>
@@ -169,7 +169,7 @@ $(function() { codefold.init(1); });
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  }</div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  <span class="keywordflow">case</span> json::Value::Kind::Boolean: {</div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    <span class="keywordtype">bool</span> *ret = <span class="keyword">new</span> bool();</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    *ret = V-&gt;getAsBoolean().value();</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    *ret = V-&gt;getAsBoolean().getValue();</div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    this-&gt;<a class="code hl_variable" href="../../df/d69/classMLBridge_1_1BaseSerDes.html#aca7e98198831ec27d302c89caa28766c">MessageLength</a> = <span class="keyword">sizeof</span>(bool);</div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keywordflow">return</span> ret;</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  }</div>
@@ -186,14 +186,14 @@ $(function() { codefold.init(1); });
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>      <span class="keywordflow">if</span> (<span class="keyword">auto</span> x = first-&gt;getAsInteger()) {</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        std::vector&lt;IntegerType&gt; *ret = <span class="keyword">new</span> std::vector&lt;IntegerType&gt;();</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> it : *arr) {</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>          ret-&gt;push_back(it.getAsInteger().value());</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>          ret-&gt;push_back(it.getAsInteger().getValue());</div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        }</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        this-&gt;<a class="code hl_variable" href="../../df/d69/classMLBridge_1_1BaseSerDes.html#aca7e98198831ec27d302c89caa28766c">MessageLength</a> = ret-&gt;size() * <span class="keyword">sizeof</span>(<a class="code hl_typedef" href="../../d5/d9c/namespaceMLBridge.html#a7e5fd396c78a607618c713eeca1ed7a5">IntegerType</a>);</div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        <span class="keywordflow">return</span> ret-&gt;data();</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>      } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<span class="keyword">auto</span> x = first-&gt;getAsNumber()) {</div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        std::vector&lt;RealType&gt; *ret = <span class="keyword">new</span> std::vector&lt;RealType&gt;();</div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> it : *arr) {</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>          ret-&gt;push_back(it.getAsNumber().value());</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>          ret-&gt;push_back(it.getAsNumber().getValue());</div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        }</div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        this-&gt;<a class="code hl_variable" href="../../df/d69/classMLBridge_1_1BaseSerDes.html#aca7e98198831ec27d302c89caa28766c">MessageLength</a> = ret-&gt;size() * <span class="keyword">sizeof</span>(<a class="code hl_typedef" href="../../d5/d9c/namespaceMLBridge.html#a0668a6fa22d01153981270c70d635395">RealType</a>);</div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        <span class="keywordflow">return</span> ret-&gt;data();</div>
@@ -213,7 +213,7 @@ $(function() { codefold.init(1); });
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <span class="keywordflow">case</span> json::Value::Kind::Boolean: {</div>
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>      std::vector&lt;uint8_t&gt; *ret = <span class="keyword">new</span> std::vector&lt;uint8_t&gt;();</div>
 <div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>      <span class="keywordflow">for</span> (<span class="keyword">auto</span> it : *arr) {</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        ret-&gt;push_back(it.getAsBoolean().value());</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        ret-&gt;push_back(it.getAsBoolean().getValue());</div>
 <div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>      }</div>
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>      this-&gt;<a class="code hl_variable" href="../../df/d69/classMLBridge_1_1BaseSerDes.html#aca7e98198831ec27d302c89caa28766c">MessageLength</a> = ret-&gt;size() * <span class="keyword">sizeof</span>(uint8_t);</div>
 <div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>      <span class="keywordflow">return</span> ret-&gt;data();</div>
@@ -232,19 +232,17 @@ $(function() { codefold.init(1); });
 <div class="ttc" id="aDataTypes_8h_html"><div class="ttname"><a href="../../d2/d12/DataTypes_8h.html">DataTypes.h</a></div><div class="ttdoc">This file defines the bit widths of integral and floating point types supported by the MLCompilerBrid...</div></div>
 <div class="ttc" id="aDebug_8h_html"><div class="ttname"><a href="../../d4/deb/Debug_8h.html">Debug.h</a></div><div class="ttdoc">This file defines the debug macros for the MLCompilerBridge.</div></div>
 <div class="ttc" id="aDebug_8h_html_acead4fa3a5885707b2d1cd9dc3929821"><div class="ttname"><a href="../../d4/deb/Debug_8h.html#acead4fa3a5885707b2d1cd9dc3929821">MLBRIDGE_DEBUG</a></div><div class="ttdeci">#define MLBRIDGE_DEBUG(X)</div><div class="ttdef"><b>Definition</b> <a href="../../d4/deb/Debug_8h_source.html#l00025">Debug.h:25</a></div></div>
-<div class="ttc" id="aJSON_8h_html"><div class="ttname"><a href="../../d2/d43/JSON_8h.html">JSON.h</a></div><div class="ttdoc">This file supports working with JSON data.</div></div>
 <div class="ttc" id="abaseSerDes_8h_html"><div class="ttname"><a href="../../d2/d15/baseSerDes_8h.html">baseSerDes.h</a></div><div class="ttdoc">Supporting new SerDes:</div></div>
-<div class="ttc" id="aclassMLBridge_1_1BaseSerDes_html_aca7e98198831ec27d302c89caa28766c"><div class="ttname"><a href="../../df/d69/classMLBridge_1_1BaseSerDes.html#aca7e98198831ec27d302c89caa28766c">MLBridge::BaseSerDes::MessageLength</a></div><div class="ttdeci">size_t MessageLength</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d15/baseSerDes_8h_source.html#l00083">baseSerDes.h:83</a></div></div>
+<div class="ttc" id="aclassMLBridge_1_1BaseSerDes_html_aca7e98198831ec27d302c89caa28766c"><div class="ttname"><a href="../../df/d69/classMLBridge_1_1BaseSerDes.html#aca7e98198831ec27d302c89caa28766c">MLBridge::BaseSerDes::MessageLength</a></div><div class="ttdeci">size_t MessageLength</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d15/baseSerDes_8h_source.html#l00085">baseSerDes.h:85</a></div></div>
 <div class="ttc" id="aclassMLBridge_1_1JsonSerDes_html_a14fd5d19a4fbd5db1b1d1b3bf30f0359"><div class="ttname"><a href="../../df/db6/classMLBridge_1_1JsonSerDes.html#a14fd5d19a4fbd5db1b1d1b3bf30f0359">MLBridge::JsonSerDes::desJson</a></div><div class="ttdeci">void * desJson(llvm::json::Value *V)</div><div class="ttdef"><b>Definition</b> <a href="#l00058">jsonSerDes.cpp:58</a></div></div>
 <div class="ttc" id="aclassMLBridge_1_1JsonSerDes_html_a544ddec91ba9b53df67bb3422dbe324b"><div class="ttname"><a href="../../df/db6/classMLBridge_1_1JsonSerDes.html#a544ddec91ba9b53df67bb3422dbe324b">MLBridge::JsonSerDes::deserializeUntyped</a></div><div class="ttdeci">void * deserializeUntyped(void *data) override</div><div class="ttdef"><b>Definition</b> <a href="#l00039">jsonSerDes.cpp:39</a></div></div>
 <div class="ttc" id="aclassMLBridge_1_1JsonSerDes_html_a78e90db283b62321e51ddcfeddbb66ff"><div class="ttname"><a href="../../df/db6/classMLBridge_1_1JsonSerDes.html#a78e90db283b62321e51ddcfeddbb66ff">MLBridge::JsonSerDes::getSerializedData</a></div><div class="ttdeci">void * getSerializedData() override</div><div class="ttdef"><b>Definition</b> <a href="#l00029">jsonSerDes.cpp:29</a></div></div>
 <div class="ttc" id="aclassMLBridge_1_1JsonSerDes_html_a7b8dac3a61b235d43b9cdf9dca36342c"><div class="ttname"><a href="../../df/db6/classMLBridge_1_1JsonSerDes.html#a7b8dac3a61b235d43b9cdf9dca36342c">MLBridge::JsonSerDes::J</a></div><div class="ttdeci">llvm::json::Object J</div><div class="ttdef"><b>Definition</b> <a href="../../d2/dd2/jsonSerDes_8h_source.html#l00052">jsonSerDes.h:52</a></div></div>
 <div class="ttc" id="aclassMLBridge_1_1JsonSerDes_html_aa6d8c02938e5db53b23679deac36a782"><div class="ttname"><a href="../../df/db6/classMLBridge_1_1JsonSerDes.html#aa6d8c02938e5db53b23679deac36a782">MLBridge::JsonSerDes::cleanDataStructures</a></div><div class="ttdeci">void cleanDataStructures() override</div><div class="ttdef"><b>Definition</b> <a href="../../d2/dd2/jsonSerDes_8h_source.html#l00045">jsonSerDes.h:45</a></div></div>
 <div class="ttc" id="ajsonSerDes_8h_html"><div class="ttname"><a href="../../d2/dd2/jsonSerDes_8h.html">jsonSerDes.h</a></div><div class="ttdoc">Json Serialization/Deserialization using LLVM's json library.</div></div>
-<div class="ttc" id="anamespaceMLBridge_html"><div class="ttname"><a href="../../d5/d9c/namespaceMLBridge.html">MLBridge</a></div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7b/gRPCModelRunner_8h_source.html#l00074">gRPCModelRunner.h:74</a></div></div>
+<div class="ttc" id="anamespaceMLBridge_html"><div class="ttname"><a href="../../d5/d9c/namespaceMLBridge.html">MLBridge</a></div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7b/gRPCModelRunner_8h_source.html#l00075">gRPCModelRunner.h:75</a></div></div>
 <div class="ttc" id="anamespaceMLBridge_html_a0668a6fa22d01153981270c70d635395"><div class="ttname"><a href="../../d5/d9c/namespaceMLBridge.html#a0668a6fa22d01153981270c70d635395">MLBridge::RealType</a></div><div class="ttdeci">float RealType</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d12/DataTypes_8h_source.html#l00028">DataTypes.h:28</a></div></div>
 <div class="ttc" id="anamespaceMLBridge_html_a7e5fd396c78a607618c713eeca1ed7a5"><div class="ttname"><a href="../../d5/d9c/namespaceMLBridge.html#a7e5fd396c78a607618c713eeca1ed7a5">MLBridge::IntegerType</a></div><div class="ttdeci">int IntegerType</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d12/DataTypes_8h_source.html#l00029">DataTypes.h:29</a></div></div>
-<div class="ttc" id="anamespacellvm_html"><div class="ttname"><a href="../../d9/d4a/namespacellvm.html">llvm</a></div><div class="ttdef"><b>Definition</b> <a href="../../d2/d43/JSON_8h_source.html#l00061">JSON.h:61</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

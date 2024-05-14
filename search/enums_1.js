@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tensortype_0',['TensorType',['../d5/d9c/namespaceMLBridge.html#ac24975254ef766855d6d0b7f764371fb',1,'MLBridge']]]
+  ['serdeskind_0',['SerDesKind',['../d5/d9c/namespaceMLBridge.html#afe59a69e561175c5c5e6ef1d47df6f33',1,'MLBridge']]]
 ];

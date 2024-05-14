@@ -93,7 +93,6 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../db/d06/classMLBridge_1_1Agent.html" title="Agent is a wrapper around the ONNXModel class, interfaces with the Environment class to support ML/RL...">Agent</a> is a wrapper around the <a class="el" href="../../da/d65/classONNXModel.html">ONNXModel</a> class, interfaces with the <a class="el" href="../../d7/d68/classMLBridge_1_1Environment.html">Environment</a> class to support ML/RL model inference via <a class="el" href="../../da/d65/classONNXModel.html">ONNXModel</a>.  <a href="../../db/d06/classMLBridge_1_1Agent.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d69/classMLBridge_1_1BaseSerDes.html">BaseSerDes</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the base class for SerDes.  <a href="../../df/d69/classMLBridge_1_1BaseSerDes.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/de4/classMLBridge_1_1BitstreamSerDes.html">BitstreamSerDes</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../da/de4/classMLBridge_1_1BitstreamSerDes.html" title="BitstreamSerDes - Bitstream Serialization/Deserialization which sends header information followed by ...">BitstreamSerDes</a> - Bitstream Serialization/Deserialization which sends header information followed by the raw data.  <a href="../../da/de4/classMLBridge_1_1BitstreamSerDes.html#details">More...</a><br /></td></tr>
@@ -141,6 +140,17 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
+<tr class="memitem:afe59a69e561175c5c5e6ef1d47df6f33" id="r_afe59a69e561175c5c5e6ef1d47df6f33"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afe59a69e561175c5c5e6ef1d47df6f33">SerDesKind</a> : int { <br />
+&#160;&#160;<a class="el" href="#afe59a69e561175c5c5e6ef1d47df6f33a88183b946cc5f0e8c96b2e66e1c74a7e">Unknown</a>
+, <a class="el" href="#afe59a69e561175c5c5e6ef1d47df6f33aeed8d85b888a6c015834240885ee6333">Json</a>
+, <a class="el" href="#afe59a69e561175c5c5e6ef1d47df6f33a0b79eab5aacf81d139c4eaec818a549a">Bitstream</a>
+, <a class="el" href="#afe59a69e561175c5c5e6ef1d47df6f33aecd8db69ede756bb2833887a7a1ebf35">Protobuf</a>
+, <br />
+&#160;&#160;<a class="el" href="#afe59a69e561175c5c5e6ef1d47df6f33acb20b802a3f0255e054e4fb8821c5ed2">Tensorflow</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:afe59a69e561175c5c5e6ef1d47df6f33"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the base class for SerDes.  <a href="#afe59a69e561175c5c5e6ef1d47df6f33">More...</a><br /></td></tr>
+<tr class="separator:afe59a69e561175c5c5e6ef1d47df6f33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac24975254ef766855d6d0b7f764371fb" id="r_ac24975254ef766855d6d0b7f764371fb"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac24975254ef766855d6d0b7f764371fb">TensorType</a> { <a class="el" href="#ac24975254ef766855d6d0b7f764371fba4bbb8f967da6d1a610596d7257179c2b">Invalid</a>
 , <a class="el" href="#ac24975254ef766855d6d0b7f764371fba2e475ae6f1321d9d10dacad0b6bc48cd">_TENSOR_TYPE_ENUM_MEMBERS</a>
 , <a class="el" href="#ac24975254ef766855d6d0b7f764371fba96b0141273eabab320119c467cdcaf17">Total</a>
@@ -158,13 +168,13 @@ Functions</h2></td></tr>
 <tr class="memitem:a0532294b18a05dcea75a72e3496db0cb" id="r_a0532294b18a05dcea75a72e3496db0cb"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0532294b18a05dcea75a72e3496db0cb">tensorValueToString</a> (const char *Buffer, const <a class="el" href="../../d2/d87/classMLBridge_1_1TensorSpec.html">TensorSpec</a> &amp;Spec)</td></tr>
 <tr class="memdesc:a0532294b18a05dcea75a72e3496db0cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">For debugging.  <br /></td></tr>
 <tr class="separator:a0532294b18a05dcea75a72e3496db0cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1ae58fc820384ee58ac74ef94d1c7e7" id="r_ac1ae58fc820384ee58ac74ef94d1c7e7"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="../../d2/d87/classMLBridge_1_1TensorSpec.html">TensorSpec</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac1ae58fc820384ee58ac74ef94d1c7e7">getTensorSpecFromJSON</a> (llvm::LLVMContext &amp;Ctx, const llvm::json::Value &amp;Value)</td></tr>
-<tr class="memdesc:ac1ae58fc820384ee58ac74ef94d1c7e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <a class="el" href="../../d2/d87/classMLBridge_1_1TensorSpec.html">TensorSpec</a> from a JSON dictionary of the form: { "name": &lt;string&gt;, "port": &lt;int&gt;, "type": &lt;string.  <br /></td></tr>
-<tr class="separator:ac1ae58fc820384ee58ac74ef94d1c7e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ba9e6529f28a39830aff795fef17564" id="r_a9ba9e6529f28a39830aff795fef17564"><td class="memItemLeft" align="right" valign="top">llvm::Optional&lt; <a class="el" href="../../d2/d87/classMLBridge_1_1TensorSpec.html">TensorSpec</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ba9e6529f28a39830aff795fef17564">getTensorSpecFromJSON</a> (llvm::LLVMContext &amp;Ctx, const llvm::json::Value &amp;Value)</td></tr>
+<tr class="memdesc:a9ba9e6529f28a39830aff795fef17564"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <a class="el" href="../../d2/d87/classMLBridge_1_1TensorSpec.html">TensorSpec</a> from a JSON dictionary of the form: { "name": &lt;string&gt;, "port": &lt;int&gt;, "type": &lt;string.  <br /></td></tr>
+<tr class="separator:a9ba9e6529f28a39830aff795fef17564"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa801c42f31b8fb150727d1b9cb38330b" id="r_aa801c42f31b8fb150727d1b9cb38330b"><td class="memItemLeft" align="right" valign="top">StringRef&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa801c42f31b8fb150727d1b9cb38330b">toString</a> (<a class="el" href="#ac24975254ef766855d6d0b7f764371fb">TensorType</a> TT)</td></tr>
 <tr class="separator:aa801c42f31b8fb150727d1b9cb38330b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad42554006482ad110d93a01e71bcb53c" id="r_ad42554006482ad110d93a01e71bcb53c"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="../../d2/d87/classMLBridge_1_1TensorSpec.html">TensorSpec</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad42554006482ad110d93a01e71bcb53c">getTensorSpecFromJSON</a> (LLVMContext &amp;Ctx, const json::Value &amp;Value)</td></tr>
-<tr class="separator:ad42554006482ad110d93a01e71bcb53c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafd5ed6de7e50aaab12653ceb8363174" id="r_aafd5ed6de7e50aaab12653ceb8363174"><td class="memItemLeft" align="right" valign="top">llvm::Optional&lt; <a class="el" href="../../d2/d87/classMLBridge_1_1TensorSpec.html">TensorSpec</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aafd5ed6de7e50aaab12653ceb8363174">getTensorSpecFromJSON</a> (LLVMContext &amp;Ctx, const json::Value &amp;Value)</td></tr>
+<tr class="separator:aafd5ed6de7e50aaab12653ceb8363174"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="a7e5fd396c78a607618c713eeca1ed7a5" name="a7e5fd396c78a607618c713eeca1ed7a5"></a>
@@ -216,6 +226,40 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="afe59a69e561175c5c5e6ef1d47df6f33" name="afe59a69e561175c5c5e6ef1d47df6f33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe59a69e561175c5c5e6ef1d47df6f33">&#9670;&#160;</a></span>SerDesKind</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#afe59a69e561175c5c5e6ef1d47df6f33">MLBridge::SerDesKind</a> : int</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This is the base class for SerDes. </p>
+<p>It defines the interface for the serialization and deserialization of the data structures used for the communication by the <a class="el" href="../../dc/d4e/classMLBridge_1_1MLModelRunner.html" title="MLModelRunner - The main interface for interacting with the ML models.">MLModelRunner</a>. Currently, (int, float) or (long, double), char and bool are supported. Vectors of these types are supported as well. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="afe59a69e561175c5c5e6ef1d47df6f33a88183b946cc5f0e8c96b2e66e1c74a7e" name="afe59a69e561175c5c5e6ef1d47df6f33a88183b946cc5f0e8c96b2e66e1c74a7e"></a>Unknown&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="afe59a69e561175c5c5e6ef1d47df6f33aeed8d85b888a6c015834240885ee6333" name="afe59a69e561175c5c5e6ef1d47df6f33aeed8d85b888a6c015834240885ee6333"></a>Json&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="afe59a69e561175c5c5e6ef1d47df6f33a0b79eab5aacf81d139c4eaec818a549a" name="afe59a69e561175c5c5e6ef1d47df6f33a0b79eab5aacf81d139c4eaec818a549a"></a>Bitstream&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="afe59a69e561175c5c5e6ef1d47df6f33aecd8db69ede756bb2833887a7a1ebf35" name="afe59a69e561175c5c5e6ef1d47df6f33aecd8db69ede756bb2833887a7a1ebf35"></a>Protobuf&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="afe59a69e561175c5c5e6ef1d47df6f33acb20b802a3f0255e054e4fb8821c5ed2" name="afe59a69e561175c5c5e6ef1d47df6f33acb20b802a3f0255e054e4fb8821c5ed2"></a>Tensorflow&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="../../d2/d15/baseSerDes_8h_source.html#l00046">46</a> of file <a class="el" href="../../d2/d15/baseSerDes_8h_source.html">baseSerDes.h</a>.</p>
+
+</div>
+</div>
 <a id="ac24975254ef766855d6d0b7f764371fb" name="ac24975254ef766855d6d0b7f764371fb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac24975254ef766855d6d0b7f764371fb">&#9670;&#160;</a></span>TensorType</h2>
 
@@ -246,14 +290,14 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ac1ae58fc820384ee58ac74ef94d1c7e7" name="ac1ae58fc820384ee58ac74ef94d1c7e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac1ae58fc820384ee58ac74ef94d1c7e7">&#9670;&#160;</a></span>getTensorSpecFromJSON() <span class="overload">[1/2]</span></h2>
+<a id="a9ba9e6529f28a39830aff795fef17564" name="a9ba9e6529f28a39830aff795fef17564"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ba9e6529f28a39830aff795fef17564">&#9670;&#160;</a></span>getTensorSpecFromJSON() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::optional&lt; <a class="el" href="../../d2/d87/classMLBridge_1_1TensorSpec.html">TensorSpec</a> &gt; MLBridge::getTensorSpecFromJSON </td>
+          <td class="memname">llvm::Optional&lt; <a class="el" href="../../d2/d87/classMLBridge_1_1TensorSpec.html">TensorSpec</a> &gt; MLBridge::getTensorSpecFromJSON </td>
           <td>(</td>
           <td class="paramtype">llvm::LLVMContext &amp;</td>          <td class="paramname"><span class="paramname"><em>Ctx</em>, </span></td>
         </tr>
@@ -270,14 +314,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad42554006482ad110d93a01e71bcb53c" name="ad42554006482ad110d93a01e71bcb53c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad42554006482ad110d93a01e71bcb53c">&#9670;&#160;</a></span>getTensorSpecFromJSON() <span class="overload">[2/2]</span></h2>
+<a id="aafd5ed6de7e50aaab12653ceb8363174" name="aafd5ed6de7e50aaab12653ceb8363174"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aafd5ed6de7e50aaab12653ceb8363174">&#9670;&#160;</a></span>getTensorSpecFromJSON() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::optional&lt; <a class="el" href="../../d2/d87/classMLBridge_1_1TensorSpec.html">TensorSpec</a> &gt; MLBridge::getTensorSpecFromJSON </td>
+          <td class="memname">llvm::Optional&lt; <a class="el" href="../../d2/d87/classMLBridge_1_1TensorSpec.html">TensorSpec</a> &gt; MLBridge::getTensorSpecFromJSON </td>
           <td>(</td>
           <td class="paramtype">LLVMContext &amp;</td>          <td class="paramname"><span class="paramname"><em>Ctx</em>, </span></td>
         </tr>
@@ -289,7 +333,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/d39/TensorSpec_8cpp_source.html#l00067">67</a> of file <a class="el" href="../../df/d39/TensorSpec_8cpp_source.html">TensorSpec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d39/TensorSpec_8cpp_source.html#l00068">68</a> of file <a class="el" href="../../df/d39/TensorSpec_8cpp_source.html">TensorSpec.cpp</a>.</p>
 
 </div>
 </div>
@@ -310,7 +354,7 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d02/TFModelRunner_8h_source.html#l00105">105</a> of file <a class="el" href="../../d8/d02/TFModelRunner_8h_source.html">TFModelRunner.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d02/TFModelRunner_8h_source.html#l00104">104</a> of file <a class="el" href="../../d8/d02/TFModelRunner_8h_source.html">TFModelRunner.h</a>.</p>
 
 </div>
 </div>
@@ -339,7 +383,7 @@ template&lt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d02/TFModelRunner_8h_source.html#l00107">107</a> of file <a class="el" href="../../d8/d02/TFModelRunner_8h_source.html">TFModelRunner.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d8/d02/TFModelRunner_8h_source.html#l00106">106</a> of file <a class="el" href="../../d8/d02/TFModelRunner_8h_source.html">TFModelRunner.h</a>.</p>
 
 </div>
 </div>
@@ -364,7 +408,7 @@ template&lt;&gt; </div>
 
 <p>For debugging. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d39/TensorSpec_8cpp_source.html#l00105">105</a> of file <a class="el" href="../../df/d39/TensorSpec_8cpp_source.html">TensorSpec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d39/TensorSpec_8cpp_source.html#l00110">110</a> of file <a class="el" href="../../df/d39/TensorSpec_8cpp_source.html">TensorSpec.cpp</a>.</p>
 
 </div>
 </div>
@@ -383,7 +427,7 @@ template&lt;&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../df/d39/TensorSpec_8cpp_source.html#l00044">44</a> of file <a class="el" href="../../df/d39/TensorSpec_8cpp_source.html">TensorSpec.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d39/TensorSpec_8cpp_source.html#l00045">45</a> of file <a class="el" href="../../df/d39/TensorSpec_8cpp_source.html">TensorSpec.cpp</a>.</p>
 
 </div>
 </div>

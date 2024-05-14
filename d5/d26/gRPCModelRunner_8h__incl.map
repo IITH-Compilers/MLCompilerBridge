@@ -1,41 +1,40 @@
 <map id="include/MLModelRunner/gRPCModelRunner.h" name="include/MLModelRunner/gRPCModelRunner.h">
-<area shape="rect" id="Node000001" title="gRPCModelRunner class supporting communication via gRPC." alt="" coords="769,5,930,46"/>
-<area shape="rect" id="Node000002" href="$df/d23/MLModelRunner_8h.html" title="The MLModelRunner class is the main interface for interacting with the ML models." alt="" coords="534,102,760,127"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="805,49,690,98,688,93,803,44"/>
-<area shape="rect" id="Node000023" title=" " alt="" coords="5,256,73,282"/>
-<area shape="poly" id="edge24_Node000001_Node000023" title=" " alt="" coords="769,33,590,46,482,57,372,72,266,92,171,117,95,148,66,165,45,184,38,197,34,211,35,241,30,241,29,211,33,195,41,181,63,161,92,143,169,112,264,87,371,67,482,51,590,40,768,28"/>
-<area shape="rect" id="Node000030" title=" " alt="" coords="1133,183,1188,208"/>
-<area shape="poly" id="edge20_Node000001_Node000030" title=" " alt="" coords="838,48,827,68,818,91,817,113,825,133,846,148,878,159,961,170,1048,174,1115,180,1118,181,1117,186,1115,185,1048,179,961,175,877,164,844,153,821,136,811,114,813,89,822,65,833,45"/>
-<area shape="rect" id="Node000035" title=" " alt="" coords="835,94,971,135"/>
-<area shape="poly" id="edge21_Node000001_Node000035" title=" " alt="" coords="864,45,885,79,881,82,860,48"/>
-<area shape="rect" id="Node000036" title=" " alt="" coords="994,102,1108,127"/>
-<area shape="poly" id="edge22_Node000001_Node000036" title=" " alt="" coords="896,44,1010,93,1008,98,894,49"/>
-<area shape="rect" id="Node000037" title=" " alt="" coords="1132,94,1274,135"/>
-<area shape="poly" id="edge23_Node000001_Node000037" title=" " alt="" coords="931,44,1118,89,1116,95,930,49"/>
-<area shape="rect" id="Node000003" href="$d2/d15/baseSerDes_8h.html" title="Supporting new SerDes:" alt="" coords="702,256,851,282"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="709,125,794,148,829,164,852,181,857,201,850,219,834,236,815,250,811,246,830,232,845,216,852,200,847,184,827,168,792,153,708,130"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="868,330,922,356"/>
-<area shape="poly" id="edge14_Node000002_Node000010" title=" " alt="" coords="745,125,950,154,1033,168,1073,181,1085,204,1083,227,1070,249,1049,269,993,303,937,329,935,324,991,299,1046,265,1066,245,1078,225,1080,205,1069,185,1032,174,949,159,744,130"/>
-<area shape="rect" id="Node000012" href="$d6/d32/bitstreamSerDes_8h.html" title="Bitstream Serialization/Deserialization which sends header information followed by the raw data." alt="" coords="265,183,440,208"/>
-<area shape="poly" id="edge4_Node000002_Node000012" title=" " alt="" coords="602,130,413,181,412,176,601,125"/>
-<area shape="poly" id="edge13_Node000002_Node000023" title=" " alt="" coords="534,125,253,148,131,165,89,175,66,185,56,196,49,211,42,241,37,240,44,209,51,194,63,181,87,169,130,160,252,142,534,119"/>
-<area shape="rect" id="Node000028" href="$d2/dd2/jsonSerDes_8h.html" title="Json Serialization/Deserialization using LLVM&#39;s json library." alt="" coords="913,183,1058,208"/>
-<area shape="poly" id="edge8_Node000002_Node000028" title=" " alt="" coords="700,125,919,176,918,181,699,130"/>
-<area shape="rect" id="Node000029" title=" " alt="" coords="76,183,135,208"/>
-<area shape="poly" id="edge11_Node000002_Node000029" title=" " alt="" coords="534,129,358,150,151,185,150,180,357,145,534,124"/>
-<area shape="poly" id="edge12_Node000002_Node000030" title=" " alt="" coords="732,125,779,132,948,153,1021,163,1116,180,1118,181,1117,186,1114,185,1021,168,947,158,779,137,731,130"/>
-<area shape="rect" id="Node000031" title=" " alt="" coords="160,183,241,208"/>
-<area shape="poly" id="edge15_Node000002_Node000031" title=" " alt="" coords="569,130,256,185,256,179,568,125"/>
-<area shape="rect" id="Node000032" href="$d1/de8/protobufSerDes_8h.html" title="Protobuf Serialization/Deserialization to support gRPC communication." alt="" coords="464,183,633,208"/>
-<area shape="poly" id="edge16_Node000002_Node000032" title=" " alt="" coords="634,130,577,175,573,171,630,126"/>
-<area shape="rect" id="Node000033" href="$dd/d3f/tensorflowSerDes_8h.html" title="Serialization/Deserialization to support TF AOT models." alt="" coords="657,183,837,208"/>
-<area shape="poly" id="edge18_Node000002_Node000033" title=" " alt="" coords="664,125,722,171,718,175,661,130"/>
-<area shape="poly" id="edge3_Node000003_Node000010" title=" " alt="" coords="798,280,863,319,861,324,795,285"/>
-<area shape="poly" id="edge5_Node000012_Node000003" title=" " alt="" coords="425,206,689,251,688,256,424,212"/>
-<area shape="poly" id="edge7_Node000012_Node000010" title=" " alt="" coords="398,206,854,328,853,333,397,211"/>
-<area shape="poly" id="edge6_Node000012_Node000023" title=" " alt="" coords="299,212,88,259,87,254,298,206"/>
-<area shape="poly" id="edge9_Node000028_Node000003" title=" " alt="" coords="951,211,827,253,826,248,949,206"/>
-<area shape="poly" id="edge10_Node000028_Node000010" title=" " alt="" coords="981,210,913,318,908,315,976,207"/>
-<area shape="poly" id="edge17_Node000032_Node000003" title=" " alt="" coords="588,206,724,249,722,254,586,211"/>
-<area shape="poly" id="edge19_Node000033_Node000003" title=" " alt="" coords="754,208,768,241,763,243,749,210"/>
+<area shape="rect" id="Node000001" title="gRPCModelRunner class supporting communication via gRPC." alt="" coords="962,5,1123,46"/>
+<area shape="rect" id="Node000002" href="$df/d23/MLModelRunner_8h.html" title="The MLModelRunner class is the main interface for interacting with the ML models." alt="" coords="444,102,670,127"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="961,44,641,101,640,96,960,39"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="586,256,653,282"/>
+<area shape="poly" id="edge22_Node000001_Node000017" title=" " alt="" coords="1014,49,988,70,964,96,949,127,943,155,935,183,927,197,913,210,895,221,869,231,804,247,669,266,668,261,803,241,868,226,892,216,910,206,923,194,931,181,938,154,944,125,960,92,985,66,1011,45"/>
+<area shape="rect" id="Node000023" title=" " alt="" coords="846,183,900,208"/>
+<area shape="poly" id="edge18_Node000001_Node000023" title=" " alt="" coords="990,49,953,69,920,96,897,132,882,169,877,167,892,129,916,92,950,64,988,44"/>
+<area shape="rect" id="Node000028" title=" " alt="" coords="975,94,1110,135"/>
+<area shape="poly" id="edge19_Node000001_Node000028" title=" " alt="" coords="1045,47,1045,78,1040,78,1040,47"/>
+<area shape="rect" id="Node000029" title=" " alt="" coords="1134,102,1247,127"/>
+<area shape="poly" id="edge20_Node000001_Node000029" title=" " alt="" coords="1077,44,1158,91,1155,96,1074,49"/>
+<area shape="rect" id="Node000030" title=" " alt="" coords="1272,94,1413,135"/>
+<area shape="poly" id="edge21_Node000001_Node000030" title=" " alt="" coords="1111,44,1261,87,1259,92,1110,49"/>
+<area shape="rect" id="Node000031" title=" " alt="" coords="1438,102,1495,127"/>
+<area shape="poly" id="edge23_Node000001_Node000031" title=" " alt="" coords="1124,32,1266,54,1347,70,1426,91,1430,93,1428,98,1424,97,1345,75,1265,59,1123,38"/>
+<area shape="rect" id="Node000003" href="$d2/d15/baseSerDes_8h.html" title="Supporting new SerDes:" alt="" coords="124,256,273,282"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="444,125,322,134,194,147,88,164,53,174,35,185,28,196,27,206,32,215,41,223,72,238,110,250,109,255,70,243,38,228,28,218,22,207,23,194,31,181,51,169,87,159,193,142,322,129,444,120"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="228,330,281,356"/>
+<area shape="poly" id="edge14_Node000002_Node000010" title=" " alt="" coords="444,125,319,134,186,147,77,164,41,174,21,185,13,197,9,209,9,221,13,232,32,254,62,274,99,292,139,307,213,329,212,334,137,312,97,297,59,279,29,258,9,235,4,222,3,209,8,195,18,181,39,169,76,159,186,141,318,128,444,119"/>
+<area shape="rect" id="Node000012" href="$d6/d32/bitstreamSerDes_8h.html" title="Bitstream Serialization/Deserialization which sends header information followed by the raw data." alt="" coords="407,183,582,208"/>
+<area shape="poly" id="edge4_Node000002_Node000012" title=" " alt="" coords="549,129,515,172,511,169,545,126"/>
+<area shape="poly" id="edge13_Node000002_Node000017" title=" " alt="" coords="567,126,597,182,616,241,611,242,592,184,562,129"/>
+<area shape="rect" id="Node000021" href="$d2/dd2/jsonSerDes_8h.html" title="Json Serialization/Deserialization using LLVM&#39;s json library." alt="" coords="238,183,383,208"/>
+<area shape="poly" id="edge8_Node000002_Node000021" title=" " alt="" coords="520,130,363,180,362,175,518,125"/>
+<area shape="rect" id="Node000022" title=" " alt="" coords="657,183,716,208"/>
+<area shape="poly" id="edge11_Node000002_Node000022" title=" " alt="" coords="578,125,655,172,652,177,575,130"/>
+<area shape="poly" id="edge12_Node000002_Node000023" title=" " alt="" coords="611,125,831,179,830,184,610,130"/>
+<area shape="rect" id="Node000024" title=" " alt="" coords="740,183,822,208"/>
+<area shape="poly" id="edge15_Node000002_Node000024" title=" " alt="" coords="592,125,733,175,731,180,590,130"/>
+<area shape="rect" id="Node000025" href="$d1/de8/protobufSerDes_8h.html" title="Protobuf Serialization/Deserialization to support gRPC communication." alt="" coords="45,183,213,208"/>
+<area shape="poly" id="edge16_Node000002_Node000025" title=" " alt="" coords="491,130,210,182,209,177,490,125"/>
+<area shape="poly" id="edge3_Node000003_Node000010" title=" " alt="" coords="210,281,237,316,233,319,205,284"/>
+<area shape="poly" id="edge5_Node000012_Node000003" title=" " alt="" coords="444,212,264,255,263,250,443,206"/>
+<area shape="poly" id="edge7_Node000012_Node000010" title=" " alt="" coords="475,211,289,324,286,319,473,207"/>
+<area shape="poly" id="edge6_Node000012_Node000017" title=" " alt="" coords="517,207,586,246,584,251,514,211"/>
+<area shape="poly" id="edge9_Node000021_Node000003" title=" " alt="" coords="293,211,231,250,229,245,290,207"/>
+<area shape="poly" id="edge10_Node000021_Node000010" title=" " alt="" coords="310,209,287,283,271,317,266,315,282,281,305,208"/>
+<area shape="poly" id="edge17_Node000025_Node000003" title=" " alt="" coords="142,207,178,243,174,247,138,210"/>
 </map>

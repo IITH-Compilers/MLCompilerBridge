@@ -1,5 +1,5 @@
 <map id="MLBridge::JsonSerDes" name="MLBridge::JsonSerDes">
 <area shape="rect" id="Node000001" title="JsonSerDes &#45; Json Serialization/Deserialization using LLVM&#39;s json library." alt="" coords="6,79,161,105"/>
-<area shape="rect" id="Node000002" href="$df/d69/classMLBridge_1_1BaseSerDes.html" title="This is the base class for SerDes." alt="" coords="5,5,162,31"/>
+<area shape="rect" id="Node000002" href="$df/d69/classMLBridge_1_1BaseSerDes.html" title=" " alt="" coords="5,5,162,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,46,86,79,81,79,81,46"/>
 </map>

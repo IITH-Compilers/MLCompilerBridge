@@ -79,7 +79,8 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle"><div class="title">baseSerDes.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -170,7 +171,6 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d69/classMLBridge_1_1BaseSerDes.html">MLBridge::BaseSerDes</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the base class for SerDes.  <a href="../../df/d69/classMLBridge_1_1BaseSerDes.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -185,13 +185,27 @@ Macros</h2></td></tr>
 <tr class="memitem:a6f960678a61f114233bbd0f2c6b15dd0" id="r_a6f960678a61f114233bbd0f2c6b15dd0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f960678a61f114233bbd0f2c6b15dd0">SET_FEATURE</a>(TYPE,  _)</td></tr>
 <tr class="memdesc:a6f960678a61f114233bbd0f2c6b15dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">setFeature() is used to set the features of the data structure used for communication.  <br /></td></tr>
 <tr class="separator:a6f960678a61f114233bbd0f2c6b15dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:afe59a69e561175c5c5e6ef1d47df6f33" id="r_afe59a69e561175c5c5e6ef1d47df6f33"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d9c/namespaceMLBridge.html#afe59a69e561175c5c5e6ef1d47df6f33">MLBridge::SerDesKind</a> : int { <br />
+&#160;&#160;<a class="el" href="../../d5/d9c/namespaceMLBridge.html#afe59a69e561175c5c5e6ef1d47df6f33a88183b946cc5f0e8c96b2e66e1c74a7e">MLBridge::Unknown</a>
+, <a class="el" href="../../d5/d9c/namespaceMLBridge.html#afe59a69e561175c5c5e6ef1d47df6f33aeed8d85b888a6c015834240885ee6333">MLBridge::Json</a>
+, <a class="el" href="../../d5/d9c/namespaceMLBridge.html#afe59a69e561175c5c5e6ef1d47df6f33a0b79eab5aacf81d139c4eaec818a549a">MLBridge::Bitstream</a>
+, <a class="el" href="../../d5/d9c/namespaceMLBridge.html#afe59a69e561175c5c5e6ef1d47df6f33aecd8db69ede756bb2833887a7a1ebf35">MLBridge::Protobuf</a>
+, <br />
+&#160;&#160;<a class="el" href="../../d5/d9c/namespaceMLBridge.html#afe59a69e561175c5c5e6ef1d47df6f33acb20b802a3f0255e054e4fb8821c5ed2">MLBridge::Tensorflow</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:afe59a69e561175c5c5e6ef1d47df6f33"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the base class for SerDes.  <a href="../../d5/d9c/namespaceMLBridge.html#afe59a69e561175c5c5e6ef1d47df6f33">More...</a><br /></td></tr>
+<tr class="separator:afe59a69e561175c5c5e6ef1d47df6f33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Supporting new SerDes: </p>
 <ol type="1">
 <li>Create a new class which inherits from BaseSerDes.</li>
 <li>Implement the setFeature(), getSerializedData(), cleanDataStructures() and deserializeUntyped() methods.</li>
-<li>Add the new SerDes to the enum class Kind in this class. </li>
+<li>Add the new SerDes to the enum class SerDesKind in this class. </li>
 </ol>
 
 <p class="definition">Definition in file <a class="el" href="../../d2/d15/baseSerDes_8h_source.html">baseSerDes.h</a>.</p>

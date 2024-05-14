@@ -11,10 +11,8 @@ var searchData=
   ['integration_8',['Trained model integration',['../de/d3b/md_MLModelRunner_2ONNXModelRunner_2README.html#autotoc_md9',1,'']]],
   ['integration_20with_20llvm_20pass_9',['Integration with LLVM Pass',['../de/d3b/md_MLModelRunner_2ONNXModelRunner_2README.html#autotoc_md13',1,'']]],
   ['invalid_10',['Invalid',['../d5/d9c/namespaceMLBridge.html#ac24975254ef766855d6d0b7f764371fba4bbb8f967da6d1a610596d7257179c2b',1,'MLBridge']]],
-  ['is_5fuint_5f64_5fbit_5fv_11',['is_uint_64_bit_v',['../d3/db1/namespacellvm_1_1json.html#a03041d200886efaf9203b536e55472c8',1,'llvm::json']]],
-  ['iselementtype_12',['isElementType',['../d2/d87/classMLBridge_1_1TensorSpec.html#a1060e2492fa036beb3da4003dd26c5f9',1,'MLBridge::TensorSpec']]],
-  ['isembeddedmodelevaluatorvalid_13',['isEmbeddedModelEvaluatorValid',['../d5/d9c/namespaceMLBridge.html#a83cc8ebb235989b9bdc8b760a65e1686',1,'MLBridge']]],
-  ['isembeddedmodelevaluatorvalid_3c_20noopsavedmodelimpl_20_3e_14',['isEmbeddedModelEvaluatorValid&lt; NoopSavedModelImpl &gt;',['../d5/d9c/namespaceMLBridge.html#ad9a80f74bbcf3ba67dcca44dce37d603',1,'MLBridge']]],
-  ['isportavailable_15',['isPortAvailable',['../d4/d4a/classMLBridge_1_1gRPCModelRunner.html#af98488d2c0a9a902a1a5313aba8cd8b5',1,'MLBridge::gRPCModelRunner']]],
-  ['isutf8_16',['isUTF8',['../d3/db1/namespacellvm_1_1json.html#a385765e73480a0f2d49dcc84a8fb70da',1,'llvm::json']]]
+  ['iselementtype_11',['isElementType',['../d2/d87/classMLBridge_1_1TensorSpec.html#a1060e2492fa036beb3da4003dd26c5f9',1,'MLBridge::TensorSpec']]],
+  ['isembeddedmodelevaluatorvalid_12',['isEmbeddedModelEvaluatorValid',['../d5/d9c/namespaceMLBridge.html#a83cc8ebb235989b9bdc8b760a65e1686',1,'MLBridge']]],
+  ['isembeddedmodelevaluatorvalid_3c_20noopsavedmodelimpl_20_3e_13',['isEmbeddedModelEvaluatorValid&lt; NoopSavedModelImpl &gt;',['../d5/d9c/namespaceMLBridge.html#ad9a80f74bbcf3ba67dcca44dce37d603',1,'MLBridge']]],
+  ['isportavailable_14',['isPortAvailable',['../d4/d4a/classMLBridge_1_1gRPCModelRunner.html#af98488d2c0a9a902a1a5313aba8cd8b5',1,'MLBridge::gRPCModelRunner']]]
 ];

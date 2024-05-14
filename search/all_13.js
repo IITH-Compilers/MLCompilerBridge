@@ -4,7 +4,7 @@ var searchData=
   ['temporary_5fstorage_5fclean_1',['TEMPORARY_STORAGE_CLEAN',['../d6/d32/bitstreamSerDes_8h.html#a7054a13d19ac63a9ec233e407c8c7814',1,'bitstreamSerDes.h']]],
   ['temporary_5fstorage_5fdef_2',['TEMPORARY_STORAGE_DEF',['../d6/d32/bitstreamSerDes_8h.html#aa835caca3c9cfdd596ca3f9d35079bb8',1,'bitstreamSerDes.h']]],
   ['temporary_5fstorage_5finit_3',['TEMPORARY_STORAGE_INIT',['../d6/d32/bitstreamSerDes_8h.html#af72af22dc2326b7a0a8a29445122e0b6',1,'bitstreamSerDes.h']]],
-  ['tensorflow_4',['Tensorflow',['../df/d69/classMLBridge_1_1BaseSerDes.html#a03e4188fd2b99530aad3eb3d69130c50acb20b802a3f0255e054e4fb8821c5ed2',1,'MLBridge::BaseSerDes']]],
+  ['tensorflow_4',['Tensorflow',['../d5/d9c/namespaceMLBridge.html#afe59a69e561175c5c5e6ef1d47df6f33acb20b802a3f0255e054e4fb8821c5ed2',1,'MLBridge']]],
   ['tensorflowserdes_5',['TensorflowSerDes',['../d9/d52/classMLBridge_1_1TensorflowSerDes.html',1,'MLBridge::TensorflowSerDes'],['../d9/d52/classMLBridge_1_1TensorflowSerDes.html#a9ee1d45cc570c58cb5cde854895ea3b9',1,'MLBridge::TensorflowSerDes::TensorflowSerDes()']]],
   ['tensorflowserdes_2ecpp_6',['tensorflowSerDes.cpp',['../d3/d15/tensorflowSerDes_8cpp.html',1,'']]],
   ['tensorflowserdes_2eh_7',['tensorflowSerDes.h',['../dd/d3f/tensorflowSerDes_8h.html',1,'']]],
@@ -22,12 +22,12 @@ var searchData=
   ['tfutils_5fgetdatatype_5fimpl_19',['TFUTILS_GETDATATYPE_IMPL',['../df/d39/TensorSpec_8cpp.html#a6b84a4af21dbe97a7167d41386253c44',1,'TensorSpec.cpp']]],
   ['tfutils_5fgetname_5fimpl_20',['TFUTILS_GETNAME_IMPL',['../df/d39/TensorSpec_8cpp.html#a97b6550ebb6e94eebaca1f30427dcd46',1,'TensorSpec.cpp']]],
   ['to_5fcompiler_21',['to_compiler',['../d1/dee/classcompilerinterface_1_1PipeCompilerInterface_1_1PipeCompilerInterface.html#ac20d74558e2aee8cf3102d99d91d5ec4',1,'compilerinterface::PipeCompilerInterface::PipeCompilerInterface']]],
-  ['tojson_22',['toJSON',['../d2/d87/classMLBridge_1_1TensorSpec.html#a3849ade063e4820817acec596468e25d',1,'MLBridge::TensorSpec::toJSON()'],['../d3/db1/namespacellvm_1_1json.html#a0583929481e4fadf2c53598a411a6118',1,'llvm::json::toJSON()']]],
+  ['tojson_22',['toJSON',['../d2/d87/classMLBridge_1_1TensorSpec.html#a3849ade063e4820817acec596468e25d',1,'MLBridge::TensorSpec']]],
   ['toml_5ffield_5fregex_23',['toml_field_regex',['../d9/df3/namespacefetch__version.html#abe685f2c7f3076ee749a72cd7fcaf2f0',1,'fetch_version']]],
   ['tools_2ecpp_24',['tools.cpp',['../d3/d62/tools_8cpp.html',1,'']]],
   ['tostring_25',['toString',['../d5/d9c/namespaceMLBridge.html#aa801c42f31b8fb150727d1b9cb38330b',1,'MLBridge']]],
   ['total_26',['Total',['../d5/d9c/namespaceMLBridge.html#ac24975254ef766855d6d0b7f764371fba96b0141273eabab320119c467cdcaf17',1,'MLBridge']]],
   ['trained_20model_20integration_27',['Trained model integration',['../de/d3b/md_MLModelRunner_2ONNXModelRunner_2README.html#autotoc_md9',1,'']]],
-  ['type_28',['Type',['../dc/d4e/classMLBridge_1_1MLModelRunner.html#ad708ed037bc8332d680f0b1c4f3696b3',1,'MLBridge::MLModelRunner::Type'],['../df/d69/classMLBridge_1_1BaseSerDes.html#aab4388c28347cedc0a2b16666e653be0',1,'MLBridge::BaseSerDes::Type'],['../d2/d87/classMLBridge_1_1TensorSpec.html#a905ae76aa7a1f389c9230174b7fea197',1,'MLBridge::TensorSpec::Type']]],
-  ['type_29',['type',['../d2/d87/classMLBridge_1_1TensorSpec.html#a3f0588648f79daeef14b49fa6015c222',1,'MLBridge::TensorSpec']]]
+  ['type_28',['type',['../d2/d87/classMLBridge_1_1TensorSpec.html#a3f0588648f79daeef14b49fa6015c222',1,'MLBridge::TensorSpec']]],
+  ['type_29',['Type',['../dc/d4e/classMLBridge_1_1MLModelRunner.html#ad708ed037bc8332d680f0b1c4f3696b3',1,'MLBridge::MLModelRunner::Type'],['../df/d69/classMLBridge_1_1BaseSerDes.html#a697ce89d71aebdc7d2712595a12d45d0',1,'MLBridge::BaseSerDes::Type'],['../d2/d87/classMLBridge_1_1TensorSpec.html#a905ae76aa7a1f389c9230174b7fea197',1,'MLBridge::TensorSpec::Type']]]
 ];
