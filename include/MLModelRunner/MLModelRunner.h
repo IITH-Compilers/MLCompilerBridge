@@ -39,19 +39,24 @@
 #include "SerDes/baseSerDes.h"
 #include "SerDes/bitstreamSerDes.h"
 #include "SerDes/jsonSerDes.h"
+#include "llvm/Support/FileSystem.h"
+#include "llvm/Support/raw_ostream.h"
 
 #include <cstdlib>
+#include <fstream>
 #include <future>
 #include <memory>
+#include <ostream>
+#include <streambuf>
 #include <string>
 #include <type_traits>
 
 #ifndef C_LIBRARY
 #include "SerDes/protobufSerDes.h"
 #include "SerDes/tensorflowSerDes.h"
+#include <google/protobuf/text_format.h>
 #endif
 namespace MLBridge {
-
 /// MLModelRunner - The main interface for interacting with the ML models.
 class MLModelRunner {
 public:
@@ -78,6 +83,28 @@ public:
     memcpy(ret, res, SerDes->getMessageLength());
     dataSize = SerDes->getMessageLength() / sizeof(BaseType);
     data = ret;
+    std::error_code EC;
+    llvm::raw_fd_ostream fileStream("test-raw.txt", EC,
+                                    llvm::sys::fs::OF_Append);
+    dumpOutput(fileStream, ret, dataSize);
+  }
+
+  template <typename T>
+  void dumpOutput(llvm::raw_ostream &OS, T output_vec, int DataSize) {
+
+    OS << "Dumping output"
+       << ": ";
+    for (auto i = 0; i < DataSize; i++) {
+      OS << output_vec[i] << " ";
+    }
+    OS << "\n";
+  }
+
+  template <typename T>
+  void dumpOuput(llvm::raw_ostream &OS, T &var1, int DataSize) {
+    OS << "Dumping output"
+       << ": ";
+    OS << var1 << "\n";
   }
 
   /// Type of the MLModelRunner
@@ -87,7 +114,37 @@ public:
   SerDesKind getSerDesKind() const { return SerDesType; }
 
   virtual void requestExit() = 0;
+  std::promise<void> *exit_requested;
 
+  template <typename T, typename... Types>
+  void passMetaInfo(llvm::raw_ostream &OS, std::pair<std::string, T> &var1,
+                    std::pair<std::string, Types> &...var2) {
+    OS << var1.first << ": " << var1.second << "\n";
+    passMetaInfo(var2...);
+  }
+
+  template <typename T>
+  void dumpFeature(llvm::raw_ostream &OS, std::pair<std::string, T> &var1) {
+    OS << "Dumping input"
+       << ": ";
+    OS << var1.first << ": " << var1.second << "\n";
+  }
+
+  template <typename T>
+  void dumpFeature(llvm::raw_ostream &OS,
+                   std::pair<std::string, std::vector<T>> &var1) {
+    OS << "Dumping input"
+       << ": ";
+    OS << var1.first << ": ";
+    for (const auto &elem : var1.second) {
+      OS << elem << " ";
+    }
+    OS << "\n";
+  }
+
+  void dumpFeature(
+      llvm::raw_ostream &OS,
+      std::pair<std::string, std::vector<google::protobuf::Message *>> &var1) {}
   /// User-facing interface for setting the features to be sent to the model.
   /// The features are passed as a list of key-value pairs.
   /// The key is the name of the feature and the value is the value of the
@@ -104,6 +161,10 @@ public:
   void populateFeatures(const std::pair<U, T> &&var1,
                         const std::pair<U, Types> &&...var2) {
     SerDes->setFeature(var1.first, var1.second);
+    std::error_code EC;
+    llvm::raw_fd_ostream fileStream("test-raw.txt", EC,
+                                    llvm::sys::fs::OF_Append);
+    dumpFeature(fileStream, var1);
     populateFeatures(var2...);
   }
 

@@ -13,7 +13,10 @@
 //===----------------------------------------------------------------------===//
 
 #include "MLModelRunner/ONNXModelRunner/ONNXModelRunner.h"
+//#include "MLModelRunner/MLModelRunner.h"
+#include "MLModelRunner/MLModelRunner.h"
 #include "SerDes/baseSerDes.h"
+#include "llvm/Support/raw_ostream.h"
 
 using namespace llvm;
 namespace MLBridge {
@@ -34,14 +37,26 @@ void ONNXModelRunner::addAgent(Agent *agent, std::string name) {
   }
 }
 
+void passAgentInfo(std::string mode, std::string agentName, int action) {
+  std::error_code EC;
+  llvm::raw_fd_ostream fileStream("test-raw.txt", EC, llvm::sys::fs::OF_Append);
+  fileStream << mode << ": " << agentName << ": " << action << "\n";
+}
+
 void ONNXModelRunner::computeAction(Observation &obs) {
+  // std::error_code EC;
+  // llvm::raw_fd_ostream fileStream("test-raw.txt", EC,
+  // llvm::sys::fs::OF_Append);
   while (true) {
     Action action;
     // current agent
     auto current_agent = this->agents[this->env->getNextAgent()];
     action = current_agent->computeAction(obs);
+    passAgentInfo("input", this->env->getNextAgent(), action);
     this->env->step(action);
+
     if (this->env->checkDone()) {
+      passAgentInfo("output", this->env->getNextAgent(), action);
       std::cout << "Done🎉\n";
       break;
     }
