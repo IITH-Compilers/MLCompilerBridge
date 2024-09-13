@@ -6,6 +6,7 @@ set(protobuf_MODULE_COMPATIBLE TRUE)
 find_package(Protobuf CONFIG REQUIRED)
 set(protobuf_MODULE_COMPATIBLE TRUE)
 find_package(Protobuf CONFIG REQUIRED)
+find_package(Torch REQUIRED)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib CACHE PATH "Output directory for static libraries")
 
@@ -56,7 +57,9 @@ if(LLVM_MLBRIDGE)
   LINK_LIBS
   ModelRunnerLib
   SerDesLib
-  )
+  )  
+
+  target_link_libraries(LLVMMLBridge PRIVATE "${TORCH_LIBRARIES}")
 
   target_include_directories(LLVMMLBridge SYSTEM PUBLIC ${Protobuf_INCLUDE_DIRS} ${TENSORFLOW_AOT_PATH}/include)
   target_include_directories(LLVMMLBridge PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -78,6 +81,8 @@ else()
 
   add_library(MLCompilerBridgeC STATIC $<TARGET_OBJECTS:ModelRunnerCWrapper>)
   target_link_libraries(MLCompilerBridgeC PUBLIC SerDesCLib ModelRunnerCLib ONNXModelRunnerLib ${llvm_libs})
+  target_link_libraries(MLCompilerBridge PUBLIC "${TORCH_LIBRARIES}")
+
   target_include_directories(MLCompilerBridgeC PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include ${LLVM_INCLUDE_DIRS})
   target_compile_features(MLCompilerBridgeC PRIVATE cxx_std_17)
   target_compile_definitions(MLCompilerBridgeC PRIVATE C_LIBRARY)

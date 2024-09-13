@@ -1,3 +1,4 @@
+find_package(Torch REQUIRED)  
 add_subdirectory(Utils)
 set(PROTOS_DIRECTORY "" CACHE PATH "Path to the directory containing the proto files")
 if(NOT PROTOS_DIRECTORY STREQUAL "")
@@ -44,7 +45,8 @@ else()
   add_library(ModelRunnerLib OBJECT PipeModelRunner.cpp)
 endif(LLVM_MLBRIDGE)
 
-target_link_libraries(ModelRunnerLib PUBLIC ModelRunnerUtils ONNXModelRunnerLib)
+target_link_libraries(ModelRunnerLib PUBLIC ModelRunnerUtils ONNXModelRunnerLib "${TORCH_LIBRARIES}")
+
 
 if(NOT PROTOS_DIRECTORY STREQUAL "")
   target_link_libraries(ModelRunnerLib PUBLIC gRPCModelRunnerLib)

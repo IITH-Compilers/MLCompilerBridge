@@ -49,6 +49,7 @@
 #ifndef C_LIBRARY
 #include "SerDes/protobufSerDes.h"
 #include "SerDes/tensorflowSerDes.h"
+#include "SerDes/pytorchSerDes.h"
 #endif
 namespace MLBridge {
 
