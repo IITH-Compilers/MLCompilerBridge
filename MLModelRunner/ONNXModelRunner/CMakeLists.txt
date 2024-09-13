@@ -2,6 +2,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -DORT_NO_EXCEPTIONS")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra")
 
 find_package(Onnxruntime REQUIRED)
+find_package(Torch REQUIRED)
 
 #onnxruntime providers
 option(onnxruntime_USE_CUDA "Build with CUDA support" OFF)
@@ -52,5 +53,7 @@ add_library(ONNXModelRunnerLib OBJECT onnx.cpp
     )
 endif(LLVM_MLBRIDGE)
 
+target_link_libraries(ONNXModelRunnerLib PRIVATE "${TORCH_LIBRARIES}")
 target_link_libraries(ONNXModelRunnerLib PRIVATE Onnxruntime::Onnxruntime)
 target_include_directories(ONNXModelRunnerLib PUBLIC ${TENSORFLOW_AOT_PATH}/include)
+
