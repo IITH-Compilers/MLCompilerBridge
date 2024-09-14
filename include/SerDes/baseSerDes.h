@@ -11,7 +11,7 @@
 /// 1. Create a new class which inherits from BaseSerDes.
 /// 2. Implement the setFeature(), getSerializedData(), cleanDataStructures()
 /// and deserializeUntyped() methods.
-/// 3. Add the new SerDes to the enum class Kind in this class.
+/// 3. Add the new SerDes to the enum class SerDesKind in this class.
 ///
 //===----------------------------------------------------------------------===//
 
@@ -43,10 +43,10 @@ namespace MLBridge {
 /// communication by the MLModelRunner.
 /// Currently, (int, float) or (long, double), char and bool are supported.
 /// Vectors of these types are supported as well.
+enum class SerDesKind : int { Unknown, Json, Bitstream, Protobuf, Tensorflow, Pytorch };
 class BaseSerDes {
 public:
-  enum class Kind : int { Unknown, Json, Bitstream, Protobuf, Tensorflow };
-  Kind getKind() const { return Type; }
+  SerDesKind getKind() const { return Type; }
 
   /// setFeature() is used to set the features of the data structure used for
   /// communication. The features are set as key-value pairs. The key is a
@@ -75,9 +75,11 @@ public:
   virtual void *getResponse() { return nullptr; };
 
 protected:
-  BaseSerDes(Kind Type) : Type(Type) { assert(Type != Kind::Unknown); }
+  BaseSerDes(SerDesKind Type) : Type(Type) {
+    assert(Type != SerDesKind::Unknown);
+  }
   virtual void cleanDataStructures() = 0;
-  const Kind Type;
+  const SerDesKind Type;
   void *RequestVoid;
   void *ResponseVoid;
   size_t MessageLength;

@@ -12,21 +12,21 @@
 namespace MLBridge {
 class PytorchSerDes : public BaseSerDes {
 public:
-  PytorchSerDes() : BaseSerDes(Kind::Pytorch) {}
+  PytorchSerDes() : BaseSerDes(SerDesKind::Pytorch) {}
 
   // Constructor that takes the model path and loads the model
-  PytorchSerDes(const std::string &modelPath) : BaseSerDes(Kind::Pytorch) {
+  PytorchSerDes(const std::string &modelPath) : BaseSerDes(SerDesKind::Pytorch) {
     CompiledModel = new torch::inductor::AOTIModelContainerRunnerCpu(modelPath);
   }
 
   ~PytorchSerDes() { delete CompiledModel; }
 
   static bool classof(const BaseSerDes *S) {
-    return S->getKind() == BaseSerDes::Kind::Pytorch;
+    return S->getKind() == SerDesKind::Pytorch;
   }
 
 #define SET_FEATURE(TYPE, _)                                                      \
-  void setFeature(const std::string &, const TYPE &) override;                 \
+  void setFeature(const std::string &, const TYPE) override;                 \
   void setFeature(const std::string &, const std::vector<TYPE> &) override;
   SUPPORTED_TYPES(SET_FEATURE)
 #undef SET_FEATURE
