@@ -12,33 +12,33 @@
 
 namespace MLBridge {
 
-void PytorchSerDes::setFeature(const std::string &Name, const int &Value) {
+void PytorchSerDes::setFeature(const std::string &Name, const int Value) {
     auto tensor = torch::tensor({Value}, torch::kInt32);
     inputTensors.push_back(tensor.clone());
 }
 
-void PytorchSerDes::setFeature(const std::string &Name, const long &Value) {
+void PytorchSerDes::setFeature(const std::string &Name, const long Value) {
     auto tensor = torch::tensor({Value}, torch::kInt64);
     inputTensors.push_back(tensor.clone());
 }
 
-void PytorchSerDes::setFeature(const std::string &Name, const float &Value) {
+void PytorchSerDes::setFeature(const std::string &Name, const float Value) {
     auto tensor = torch::tensor({Value}, torch::kFloat32);
     inputTensors.push_back(tensor.clone());
 }
 
-void PytorchSerDes::setFeature(const std::string &Name, const double &Value) {
+void PytorchSerDes::setFeature(const std::string &Name, const double Value) {
     auto tensor = torch::tensor({Value}, torch::kFloat64);
     inputTensors.push_back(tensor.clone());
 }
 
-void PytorchSerDes::setFeature(const std::string &Name, const std::string &Value) {
+void PytorchSerDes::setFeature(const std::string &Name, const std::string Value) {
     std::vector<int8_t> encoded_str(Value.begin(), Value.end());
     auto tensor = torch::tensor(encoded_str, torch::kInt8);
     inputTensors.push_back(tensor.clone());
 }
 
-void PytorchSerDes::setFeature(const std::string &Name, const bool &Value) {
+void PytorchSerDes::setFeature(const std::string &Name, const bool Value) {
     auto tensor = torch::tensor({Value}, torch::kBool);
     inputTensors.push_back(tensor.clone());
 }
