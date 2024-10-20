@@ -4,63 +4,61 @@
 //
 //===------------------===//
 
-
-
 #include "SerDes/pytorchSerDes.h"
 #include "SerDes/baseSerDes.h"
-
 
 namespace MLBridge {
 
 void PytorchSerDes::setFeature(const std::string &Name, const int Value) {
     auto tensor = torch::tensor({Value}, torch::kInt32);
-    inputTensors.push_back(tensor.clone());
+    this->inputTensors->push_back(tensor.clone());
 }
 
 void PytorchSerDes::setFeature(const std::string &Name, const long Value) {
     auto tensor = torch::tensor({Value}, torch::kInt64);
-    inputTensors.push_back(tensor.clone());
+    this->inputTensors->push_back(tensor.clone());
 }
 
 void PytorchSerDes::setFeature(const std::string &Name, const float Value) {
     auto tensor = torch::tensor({Value}, torch::kFloat32);
-    inputTensors.push_back(tensor.clone());
+    this->inputTensors->push_back(tensor.clone());
 }
 
 void PytorchSerDes::setFeature(const std::string &Name, const double Value) {
     auto tensor = torch::tensor({Value}, torch::kFloat64);
-    inputTensors.push_back(tensor.clone());
+    this->inputTensors->push_back(tensor.clone());
 }
 
 void PytorchSerDes::setFeature(const std::string &Name, const std::string Value) {
     std::vector<int8_t> encoded_str(Value.begin(), Value.end());
     auto tensor = torch::tensor(encoded_str, torch::kInt8);
-    inputTensors.push_back(tensor.clone());
+    this->inputTensors->push_back(tensor.clone());
 }
 
 void PytorchSerDes::setFeature(const std::string &Name, const bool Value) {
     auto tensor = torch::tensor({Value}, torch::kBool);
-    inputTensors.push_back(tensor.clone());
+    this->inputTensors->push_back(tensor.clone());
 }
 
 void PytorchSerDes::setFeature(const std::string &Name, const std::vector<int> &Value) {
     auto tensor = torch::tensor(Value, torch::kInt32);
-    inputTensors.push_back(tensor.clone());
+    this->inputTensors->push_back(tensor.clone());
 }
 
 void PytorchSerDes::setFeature(const std::string &Name, const std::vector<long> &Value) {
     auto tensor = torch::tensor(Value, torch::kInt64);
-    inputTensors.push_back(tensor.clone());
+    this->inputTensors->push_back(tensor.clone());
 }
 
 void PytorchSerDes::setFeature(const std::string &Name, const std::vector<float> &Value) {
     auto tensor = torch::tensor(Value, torch::kFloat32);
-    inputTensors.push_back(tensor.clone());
+    tensor = tensor.reshape({1, Value.size()});
+    inputTensors->push_back(tensor.clone());
 }
 
 void PytorchSerDes::setFeature(const std::string &Name, const std::vector<double> &Value) {
     auto tensor = torch::tensor(Value, torch::kFloat64);
-    inputTensors.push_back(tensor.clone());
+    this->inputTensors->push_back(tensor.clone());
 }
 
 void PytorchSerDes::setFeature(const std::string &Name, const std::vector<std::string> &Value) {
@@ -70,13 +68,13 @@ void PytorchSerDes::setFeature(const std::string &Name, const std::vector<std::s
         flat_vec.push_back('\0'); // Null-terminate each string
     }
     auto tensor = torch::tensor(flat_vec, torch::kInt8);
-    inputTensors.push_back(tensor.clone());
+    this->inputTensors->push_back(tensor.clone());
 }
 
 void PytorchSerDes::setFeature(const std::string &Name, const std::vector<bool> &Value) {
     std::vector<uint8_t> bool_vec(Value.begin(), Value.end());
     auto tensor = torch::tensor(bool_vec, torch::kUInt8);
-    inputTensors.push_back(tensor.clone());
+    this->inputTensors->push_back(tensor.clone());
 }
 
 // void PytorchSerDes::setRequest(void *Request) {
@@ -84,7 +82,7 @@ void PytorchSerDes::setFeature(const std::string &Name, const std::vector<bool> 
 // }
 
 void PytorchSerDes::cleanDataStructures() {
-    inputTensors.clear(); // Clear the input vector
+    this->inputTensors->clear(); // Clear the input vector
 }
 
 void *PytorchSerDes::deserializeUntyped(void *Data) {
@@ -95,56 +93,38 @@ void *PytorchSerDes::deserializeUntyped(void *Data) {
     // Assume Data is a pointer to a vector of tensors
     std::vector<torch::Tensor> *serializedTensors = reinterpret_cast<std::vector<torch::Tensor> *>(Data);
 
-    // Calculate total size for the deserialized data
-    size_t totalSize = 0;
-    for (const auto &tensor : *serializedTensors) {
-        totalSize += tensor.numel() * tensor.element_size();
+    if (serializedTensors->empty()) {
+        return nullptr;
     }
 
-    // Giving value to the MessageLength variable
-    MessageLength = totalSize;
+    auto type_vect = serializedTensors->at(0).dtype();
 
-    // Allocate a contiguous block of memory for the output
-    auto *output = new uint8_t[totalSize];
-    uint8_t *outputPtr = output;
-
-    // Copy tensor data into the contiguous block of memory
-    for (const auto &tensor : *serializedTensors) {
-        size_t tensorSize = tensor.numel() * tensor.element_size();
-
-        if (tensor.dtype() == torch::kInt32) {
-            // Handle int32 tensors
-            std::memcpy(outputPtr, tensor.data_ptr<int32_t>(), tensorSize);
-        } else if (tensor.dtype() == torch::kInt64) {
-            // Handle int64 tensors
-            std::memcpy(outputPtr, tensor.data_ptr<int64_t>(), tensorSize);
-        } else if (tensor.dtype() == torch::kFloat32) {
-            // Handle float32 tensors
-            std::memcpy(outputPtr, tensor.data_ptr<float>(), tensorSize);
-        } else if (tensor.dtype() == torch::kFloat64) {
-            // Handle float64 tensors
-            std::memcpy(outputPtr, tensor.data_ptr<double>(), tensorSize);
-        } else if (tensor.dtype() == torch::kBool) {
-            // Handle bool tensors
-            std::memcpy(outputPtr, tensor.data_ptr<bool>(), tensorSize);
-        } else if (tensor.dtype() == torch::kInt8) {
-            // Handle int8 tensors (e.g., for strings)
-            std::memcpy(outputPtr, tensor.data_ptr<int8_t>(), tensorSize);
-        } else {
-            llvm::errs() << "Unsupported tensor dtype.\n";
-            delete[] output;
-            return nullptr;
-        }
-
-        outputPtr += tensorSize;
+    if (type_vect == torch::kInt32) {
+        return copyTensorToVect<int32_t>(serializedTensors);
+    } 
+    else if (type_vect == torch::kInt64) {
+        return copyTensorToVect<int64_t>(serializedTensors);
+    } 
+    else if (type_vect == torch::kFloat32) {
+        return copyTensorToVect<float>(serializedTensors);
+    } 
+    else if (type_vect == torch::kFloat64) {
+        return copyTensorToVect<double>(serializedTensors);
+    } 
+    else if (type_vect == torch::kBool) {
+        return copyTensorToVect<bool>(serializedTensors);
+    } 
+    else if (type_vect == torch::kInt8) {
+        return copyTensorToVect<int8_t>(serializedTensors);
+    } 
+    else {
+        llvm::errs() << "Unsupported tensor dtype.\n";
+        return nullptr;
     }
-    return static_cast<void *>(output);
 }
 
-
-//=== Implementation of the methods ===//
 void *PytorchSerDes::getSerializedData() {
-    std::vector<torch::Tensor> serializedData = outputTensors;
+    std::vector<torch::Tensor> serializedData = *(this->outputTensors);
 
     // Allocate memory for the output and copy the serialized data
     auto *output = new std::vector<torch::Tensor>(serializedData);
