@@ -1,8 +1,7 @@
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -DORT_NO_EXCEPTIONS")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wall -Wextra -DORT_NO_EXCEPTIONS")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra")
 
 find_package(Onnxruntime REQUIRED)
-find_package(Torch REQUIRED)
 
 #onnxruntime providers
 option(onnxruntime_USE_CUDA "Build with CUDA support" OFF)
@@ -14,30 +13,30 @@ option(onnxruntime_USE_TENSORRT "Build with TensorRT support" OFF)
 
 set(ONNXRUNTIME_ROOTDIR "" CACHE PATH "Directory that contains ONNXRuntime" )
 if(NOT ONNXRUNTIME_ROOTDIR)
-  message( FATAL_ERROR "Set path to Onnx runtime in -DONNXRUNTIME_ROOTDIR variable" )
+message( FATAL_ERROR "Set path to Onnx runtime in -DONNXRUNTIME_ROOTDIR variable" )
 endif()
 
 if(onnxruntime_USE_CUDA)
-  add_definitions(-DUSE_CUDA)
+add_definitions(-DUSE_CUDA)
 endif()
 if(onnxruntime_USE_OPENVINO)
-  add_definitions(-DUSE_OPENVINO)
+add_definitions(-DUSE_OPENVINO)
 endif()
 if(onnxruntime_USE_NNAPI_BUILTIN)
-  add_definitions(-DUSE_NNAPI)
+add_definitions(-DUSE_NNAPI)
 endif()
 if(onnxruntime_USE_DNNL)
-  add_definitions(-DUSE_DNNL)
+add_definitions(-DUSE_DNNL)
 endif()
 if(onnxruntime_USE_NUPHAR)
-  add_definitions(-DUSE_NUPHAR)
+add_definitions(-DUSE_NUPHAR)
 endif()
 if(onnxruntime_USE_TENSORRT)
-  add_definitions(-DUSE_TENSORRT)
+add_definitions(-DUSE_TENSORRT)
 endif()
 if(onnxruntime_USE_DML)
-  message("Enabling DML")
-  add_definitions(-DUSE_DML)
+message("Enabling DML")
+add_definitions(-DUSE_DML)
 endif()
 
 if(LLVM_MLBRIDGE)
@@ -48,12 +47,13 @@ ONNXModelRunner.cpp
 )
 else()
 add_library(ONNXModelRunnerLib OBJECT onnx.cpp
-      agent.cpp
-      ONNXModelRunner.cpp
-    )
+agent.cpp
+ONNXModelRunner.cpp
+)
 endif(LLVM_MLBRIDGE)
 
-target_link_libraries(ONNXModelRunnerLib PRIVATE "${TORCH_LIBRARIES}")
 target_link_libraries(ONNXModelRunnerLib PRIVATE Onnxruntime::Onnxruntime)
-target_include_directories(ONNXModelRunnerLib PUBLIC ${TENSORFLOW_AOT_PATH}/include)
+target_include_directories(ONNXModelRunnerLib PRIVATE ${TENSORFLOW_AOT_PATH}/include)
+find_package(Torch REQUIRED)
+target_link_libraries(ONNXModelRunnerLib PRIVATE ${TORCH_LIBRARIES})
 

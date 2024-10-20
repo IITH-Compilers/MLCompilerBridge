@@ -16,16 +16,13 @@ namespace MLBridge {
 
 /// PTModelRunner - PyTorch Compiled model implementation of the
 /// MLModelRunner. It uses an AOT-compiled model for efficient execution.
-template <class TGen> class PTModelRunner final : public MLModelRunner {
+class PTModelRunner final : public MLModelRunner {
 public:
   // New constructor that takes the model path as an input
   PTModelRunner(const std::string &modelPath, llvm::LLVMContext &Ctx)
-      : MLModelRunner(MLModelRunner::Kind::PTAOT, BaseSerDes::Kind::Pytorch, &Ctx),
-        CompiledModel(std::make_unique<PytorchSerDes>(modelPath)) {
-
-    SerDes->setRequest(CompiledModel.get());
-
-    assert(CompiledModel && "The CompiledModel should be valid");
+      : MLModelRunner(MLModelRunner::Kind::PTAOT, SerDesKind::Pytorch, &Ctx)
+      {
+          this->SerDes = new PytorchSerDes(modelPath);
   }
 
   virtual ~PTModelRunner() = default;
@@ -38,39 +35,51 @@ public:
     return R->getKind() == MLModelRunner::Kind::PTAOT;
   }
 
-private:
+  
+
+ template <typename U, typename T, typename... Types> 
+ void populateFeatures(const std::pair<U, T> &var1,
+                      const std::pair<U, Types> &...var2);
+
+  void populateFeatures() {}
+
+
   void *evaluateUntyped() override;
-
-  std::unique_ptr<PytorchSerDes> CompiledModel;
+  PytorchSerDes *SerDes;
 };
 
-/// A mock class satisfying the interface expected by PTModelRunner for
-/// its `TGen` parameter. Useful to avoid conditional compilation complexity, as
-/// a compile-time replacement for a real AOT-ed model.
-class NoopSavedModelImpl final {
-#define NOOP_MODEL_ERRMSG                                                      \
-  "The mock AOT-ed saved model is a compile-time stub and should not be "      \
-  "called."
 
-public:
-  NoopSavedModelImpl() = default;
-  int LookupArgIndex(const std::string &) {
-    llvm_unreachable(NOOP_MODEL_ERRMSG);
-  }
-  int LookupResultIndex(const std::string &) {
-    llvm_unreachable(NOOP_MODEL_ERRMSG);
-  }
-  void Run() { llvm_unreachable(NOOP_MODEL_ERRMSG); }
-  void *result_data(int) { llvm_unreachable(NOOP_MODEL_ERRMSG); }
-  void *arg_data(int) { llvm_unreachable(NOOP_MODEL_ERRMSG); }
-#undef NOOP_MODEL_ERRMSG
-};
+void* PTModelRunner::evaluateUntyped() {
 
-template <class T> bool isEmbeddedModelEvaluatorValid() { return true; }
+    if ((*(this->SerDes->inputTensors)).empty()) {
+        llvm::errs() << "Input vector is empty.\n";
+        return nullptr;
+    }
 
-template <> inline bool isEmbeddedModelEvaluatorValid<NoopSavedModelImpl>() {
-  return false;
+    try {
+        // Run the model with the input tensors
+        auto outputs = SerDes->CompiledModel->run((*(this->SerDes->inputTensors)));
+
+        //Store the above output in the outputTensors, outputTensors is a pointer to the vector of tensors, already initialized in the constructor
+        for (auto i = outputs.begin(); i != outputs.end(); ++i)
+            (*(this->SerDes->outputTensors)).push_back(*i);
+       
+        // Convert to raw data format using deserializeUntyped
+        void* rawData = SerDes->deserializeUntyped(SerDes->outputTensors);
+
+        return rawData;
+    } catch (const c10::Error& e) {
+        llvm::errs() << "Error during model evaluation: " << e.what() << "\n";
+        return nullptr;
+    }
 }
+
+template <typename U, typename T, typename... Types>
+  void PTModelRunner::populateFeatures(const std::pair<U, T> &var1,
+                      const std::pair<U, Types> &...var2) {
+    SerDes->setFeature(var1.first, var1.second);
+    PTModelRunner::populateFeatures(var2...);
+ }
 } // namespace MLBridge
 
 #endif // TFMODELRUNNER_H

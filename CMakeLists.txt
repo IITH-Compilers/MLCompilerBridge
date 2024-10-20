@@ -14,6 +14,8 @@ set(CMAKE_MODULE_PATH
   ${CMAKE_MODULE_PATH}
   )
 message("CMAKE Module path: ${CMAKE_MODULE_PATH}")
+
+
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib CACHE PATH "Output directory for static libraries")
 
 include_directories(${Protobuf_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -73,8 +75,8 @@ if(LLVM_MLBRIDGE)
 
   target_link_libraries(LLVMMLBridge PRIVATE "${TORCH_LIBRARIES}")
 
-  target_include_directories(LLVMMLBridge SYSTEM PUBLIC ${Protobuf_INCLUDE_DIRS} ${TENSORFLOW_AOT_PATH}/include)
-  target_include_directories(LLVMMLBridge PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+  target_include_directories(LLVMMLBridge SYSTEM PRIVATE ${Protobuf_INCLUDE_DIRS} ${TENSORFLOW_AOT_PATH}/include)
+  target_include_directories(LLVMMLBridge PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
   install(TARGETS LLVMMLBridge DESTINATION lib)
   add_custom_command(TARGET LLVMMLBridge
     POST_BUILD
@@ -85,30 +87,35 @@ else()
   llvm_map_components_to_libnames(llvm_libs support core irreader analysis TransformUtils)
 
   add_library(MLCompilerBridge STATIC tools.cpp)
-  target_link_libraries(MLCompilerBridge PUBLIC SerDesLib ModelRunnerLib ONNXModelRunnerLib ${llvm_libs})
+  target_link_libraries(MLCompilerBridge PRIVATE SerDesLib ModelRunnerLib ONNXModelRunnerLib ${llvm_libs})
+  target_link_libraries(MLCompilerBridge PRIVATE "${TORCH_LIBRARIES}")
   set_target_properties(MLCompilerBridge PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
   set_property(TARGET MLCompilerBridge PROPERTY POSITION_INDEPENDENT_CODE 1)
   install(TARGETS MLCompilerBridge DESTINATION lib)
 
 
   add_library(MLCompilerBridgeC STATIC $<TARGET_OBJECTS:ModelRunnerCWrapper>)
-  target_link_libraries(MLCompilerBridgeC PUBLIC SerDesCLib ModelRunnerCLib ONNXModelRunnerLib ${llvm_libs})
-  target_link_libraries(MLCompilerBridge PUBLIC "${TORCH_LIBRARIES}")
+  target_link_libraries(MLCompilerBridgeC PRIVATE SerDesCLib ModelRunnerCLib ONNXModelRunnerLib ${llvm_libs})
 
-  target_include_directories(MLCompilerBridgeC PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include ${LLVM_INCLUDE_DIRS})
+  target_include_directories(MLCompilerBridgeC PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${LLVM_INCLUDE_DIRS})
   target_compile_features(MLCompilerBridgeC PRIVATE cxx_std_17)
   target_compile_definitions(MLCompilerBridgeC PRIVATE C_LIBRARY)
   set_property(TARGET MLCompilerBridgeC PROPERTY POSITION_INDEPENDENT_CODE 1)
   set_target_properties(MLCompilerBridgeC PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
   install(TARGETS MLCompilerBridgeC DESTINATION lib)
   if(MLBRIDGE_ENABLE_TEST)
-    add_executable(MLCompilerBridgeTest $<TARGET_OBJECTS:MLBridgeCPPTest>)
-    target_link_libraries(MLCompilerBridgeTest PUBLIC MLCompilerBridge)
-    set_target_properties(MLCompilerBridgeTest PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-    install(TARGETS MLCompilerBridgeTest DESTINATION bin)
-  endif()
-endif(LLVM_MLBRIDGE)
+  add_executable(MLCompilerBridgeTest $<TARGET_OBJECTS:MLBridgeCPPTest>)
+  target_link_libraries(MLCompilerBridgeTest PRIVATE MLCompilerBridge)
+  set_target_properties(MLCompilerBridgeTest PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+  install(TARGETS MLCompilerBridgeTest DESTINATION bin)
+endif()
+endif(LLVM_MLBRIDGE) 
 
 install(DIRECTORY include/ DESTINATION include)
 install(DIRECTORY CompilerInterface DESTINATION MLModelRunner/CompilerInterface)
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/CompilerInterface DESTINATION ${CMAKE_BINARY_DIR}/MLModelRunner/)
+set_property(TARGET MLCompilerBridge PROPERTY CXX_STANDARD 17)
+
+
+
+message(STATUS "TensorFlow HH version: ${TensorFlow_VERSION}")

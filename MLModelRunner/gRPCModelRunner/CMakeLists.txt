@@ -1,5 +1,6 @@
 set(protobuf_MODULE_COMPATIBLE TRUE)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+find_package(Torch REQUIRED)
 find_package(Protobuf CONFIG REQUIRED)
 set(_PROTOBUF_LIBPROTOBUF protobuf::libprotobuf)
 set(_REFLECTION gRPC::grpc++_reflection)
@@ -12,7 +13,7 @@ endif()
 # Find gRPC installation
 # Looks for gRPCConfig.cmake file installed by gRPC's cmake installation.
 
-find_package(gRPC 1.34.0 EXACT CONFIG REQUIRED)
+find_package(gRPC 1.66.0 EXACT CONFIG REQUIRED)
 message(STATUS "Using gRPC ${gRPC_VERSION}")
 
 set(_GRPC_GRPCPP gRPC::grpc++)
@@ -96,9 +97,11 @@ target_link_libraries(gRPCModelRunnerLib
 	  PRIVATE ${_REFLECTION}
 	          ${_GRPC_GRPCPP}
 	          ${_PROTOBUF_LIBPROTOBUF}
+            "${TORCH_LIBRARIES}"
 )
 
 target_include_directories(gRPCModelRunnerLib
   PRIVATE ${CMAKE_BINARY_DIR}/include/Service
-  PUBLIC ${Protobuf_INCLUDE_DIRS}
+  PRIVATE ${Protobuf_INCLUDE_DIRS}
 )
+set_property(TARGET gRPCModelRunnerLib PROPERTY CXX_STANDARD 17)
