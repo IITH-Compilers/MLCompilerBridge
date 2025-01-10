@@ -50,24 +50,12 @@ public:
 
 
 void* PTModelRunner::evaluateUntyped() {
+auto outputs = SerDes->CompiledModel->run((*(this->SerDes->inputTensors)));
+for (auto i = outputs.begin(); i != outputs.end(); ++i)
+    (*(this->SerDes->outputTensors)).push_back(*i);
+void* rawData = SerDes->deserializeUntyped(SerDes->outputTensors);
+return rawData;
 
-    if ((*(this->SerDes->inputTensors)).empty()) {
-        llvm::errs() << "Input vector is empty.\n";
-        return nullptr;
-    }
-
-    try {
-        // Run the model with the input tensors
-        auto outputs = SerDes->CompiledModel->run((*(this->SerDes->inputTensors)));
-
-        //Store the above output in the outputTensors, outputTensors is a pointer to the vector of tensors, already initialized in the constructor
-        for (auto i = outputs.begin(); i != outputs.end(); ++i)
-            (*(this->SerDes->outputTensors)).push_back(*i);
-       
-        // Convert to raw data format using deserializeUntyped
-        void* rawData = SerDes->deserializeUntyped(SerDes->outputTensors);
-
-        return rawData;
     } catch (const c10::Error& e) {
         llvm::errs() << "Error during model evaluation: " << e.what() << "\n";
         return nullptr;

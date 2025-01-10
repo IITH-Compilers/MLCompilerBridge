@@ -13,7 +13,7 @@ endif()
 # Find gRPC installation
 # Looks for gRPCConfig.cmake file installed by gRPC's cmake installation.
 
-find_package(gRPC 1.66.0 EXACT CONFIG REQUIRED)
+find_package(gRPC 1.34.0 EXACT CONFIG REQUIRED)
 message(STATUS "Using gRPC ${gRPC_VERSION}")
 
 set(_GRPC_GRPCPP gRPC::grpc++)
