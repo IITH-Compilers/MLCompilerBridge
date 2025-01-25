@@ -67,7 +67,7 @@ int main(int argc, char **argv)
     if (result)
     {
       vector<float> *output = reinterpret_cast<vector<float> *>(result);
-      cout << "Output: ";
+      cout << "Output from the model: ";
       for (auto &v : *output)
       {
         cout << v << " ";

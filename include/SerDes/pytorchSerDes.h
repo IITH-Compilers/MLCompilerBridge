@@ -12,17 +12,13 @@
 namespace MLBridge {
 class PytorchSerDes : public BaseSerDes {
 public:
-  PytorchSerDes() : BaseSerDes(SerDesKind::Pytorch) {}
-
   // Constructor that takes the model path and loads the model
-  PytorchSerDes(const std::string &modelPath) : BaseSerDes(SerDesKind::Pytorch) {
-    c10::InferenceMode mode;
-    this->CompiledModel = new torch::inductor::AOTIModelContainerRunnerCpu(modelPath);
+  PytorchSerDes() : BaseSerDes(SerDesKind::Pytorch) {
     inputTensors = std::make_shared<std::vector<torch::Tensor>>();
     outputTensors = new std::vector<torch::Tensor>();
   }
 
-  ~PytorchSerDes() { delete CompiledModel; }
+  ~PytorchSerDes() {}
 
   static bool classof(const BaseSerDes *S) {
     return S->getKind() == SerDesKind::Pytorch;
@@ -34,9 +30,7 @@ public:
   SUPPORTED_TYPES(SET_FEATURE)
 #undef SET_FEATURE
 
-  void setRequest(void *request) override {
-    CompiledModel =
-        reinterpret_cast<torch::inductor::AOTIModelContainerRunnerCpu *>(request);
+  void setRequest(void *request){
   }
 
  template <typename T>
@@ -55,7 +49,7 @@ public:
 
   std::vector<torch::Tensor> *outputTensors; // Storage for the PyTorch output tensor
   std::shared_ptr<std::vector<torch::Tensor>> inputTensors; // Declaration of the input tensor
-  torch::inductor::AOTIModelContainerRunnerCpu* CompiledModel;
+
 };
 } // namespace MLBridge
 
