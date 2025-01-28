@@ -43,7 +43,7 @@ namespace MLBridge {
 /// communication by the MLModelRunner.
 /// Currently, (int, float) or (long, double), char and bool are supported.
 /// Vectors of these types are supported as well.
-enum class SerDesKind : int { Unknown, Json, Bitstream, Protobuf, Tensorflow };
+enum class SerDesKind : int { Unknown, Json, Bitstream, Protobuf, Tensorflow, Pytorch };
 class BaseSerDes {
 public:
   SerDesKind getKind() const { return Type; }

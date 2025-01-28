@@ -18,7 +18,7 @@
 #include "google/protobuf/extension_set.h"
 #include "google/protobuf/message.h"
 
-using namespace google::protobuf;
+// using namespace google::protobuf;
 
 namespace MLBridge {
 /// ProtobufSerDes - Protobuf Serialization/Deserialization to support gRPC
@@ -54,12 +54,12 @@ public:
   void *getSerializedData() override;
   void cleanDataStructures() override;
 
-  Message *getMessage() { return Response; };
+  google::protobuf::Message *getMessage() { return Response; };
 
 private:
   void *deserializeUntyped(void *data) override;
-  Message *Response;
-  Message *Request;
+  google::protobuf::Message *Response;
+  google::protobuf::Message *Request;
 };
 } // namespace MLBridge
 
