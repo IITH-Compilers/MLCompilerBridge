@@ -45,7 +45,7 @@ namespace MLBridge {
 /// Vectors of these types are supported as well.
 class BaseSerDes {
 public:
-  enum class Kind : int { Unknown, Json, Bitstream, Protobuf, Tensorflow };
+  enum class Kind : int { Unknown, Json, Bitstream, Protobuf, Tensorflow, Pytorch };
   Kind getKind() const { return Type; }
 
   /// setFeature() is used to set the features of the data structure used for
