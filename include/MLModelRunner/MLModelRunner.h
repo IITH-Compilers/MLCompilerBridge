@@ -49,6 +49,7 @@
 #ifndef C_LIBRARY
 #include "SerDes/protobufSerDes.h"
 #include "SerDes/tensorflowSerDes.h"
+#include "SerDes/pytorchSerDes.h" 
 #endif
 namespace MLBridge {
 
@@ -81,7 +82,7 @@ public:
   }
 
   /// Type of the MLModelRunner
-  enum class Kind : int { Unknown, Pipe, gRPC, ONNX, TFAOT };
+  enum class Kind : int { Unknown, Pipe, gRPC, ONNX, TFAOT, PTAOT };
 
   Kind getKind() const { return Type; }
   BaseSerDes::Kind getSerDesKind() const { return SerDesType; }
@@ -149,6 +150,9 @@ private:
       break;
     case BaseSerDes::Kind::Bitstream:
       SerDes = std::make_unique<BitstreamSerDes>();
+      break;
+    case BaseSerDes::Kind::Pytorch:
+      SerDes = std::make_unique<PytorchSerDes>();
       break;
 #ifndef C_LIBRARY
     case BaseSerDes::Kind::Protobuf:
