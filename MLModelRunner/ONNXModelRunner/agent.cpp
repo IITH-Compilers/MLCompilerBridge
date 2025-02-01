@@ -38,11 +38,11 @@ unsigned Agent::computeAction(Observation &input) {
                               model_output.end()); // [2, 4)
   int argmaxVal = std::distance(model_output.begin(), max);
 
-  MLBRIDGE_DEBUG(
-      std::cout << "---------------MODEL OUTPUT VECTOR:----------------\n";
-      for (auto e
-           : model_output) { std::cout << e << " "; } std::cout
-      << "\nmax value and index are " << *max << " " << argmaxVal << "\n";);
+  // MLBRIDGE_DEBUG(
+  //     std::cout << "---------------MODEL OUTPUT VECTOR:----------------\n";
+  //     for (auto e
+  //          : model_output) { std::cout << e << " "; } std::cout
+  //     << "\nmax value and index are " << *max << " " << argmaxVal << "\n";);
   return argmaxVal;
 }
 

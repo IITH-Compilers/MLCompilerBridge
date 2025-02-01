@@ -5,7 +5,6 @@ if(NOT PROTOS_DIRECTORY STREQUAL "")
 endif()
 add_subdirectory(ONNXModelRunner)
 add_subdirectory(C)
-find_package(Torch REQUIRED)
 
 # # For up-to-date instructions for installing the TFLite dependency, refer to
 # # the bot setup script: https://github.com/google/ml-compiler-opt/blob/main/buildbot/buildbot_init.sh
@@ -53,4 +52,5 @@ endif()
 set_property(TARGET ModelRunnerLib PROPERTY POSITION_INDEPENDENT_CODE 1)
 
 find_package(Torch REQUIRED)
-target_link_libraries(ModelRunnerLib PUBLIC ${TORCH_LIBRARIES})
+target_link_libraries(ModelRunnerLib PRIVATE ${TORCH_LIBRARIES})
+target_compile_options (ModelRunnerLib PRIVATE -frtti -fexceptions)
