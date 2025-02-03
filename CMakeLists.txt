@@ -4,8 +4,8 @@ project(MLCompilerBridge VERSION 0.0.2)
 add_compile_options("$<$<CONFIG:${CMAKE_BUILD_TYPE}>:-UNDEBUG>")
 set(protobuf_MODULE_COMPATIBLE TRUE)
 find_package(Protobuf CONFIG REQUIRED)
-set(protobuf_MODULE_COMPATIBLE TRUE)
-find_package(Protobuf CONFIG REQUIRED)
+# set(protobuf_MODULE_COMPATIBLE TRUE)
+# find_package(Protobuf CONFIG REQUIRED)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib CACHE PATH "Output directory for static libraries")
 
@@ -58,6 +58,9 @@ if(LLVM_MLBRIDGE)
   ModelRunnerLib
   SerDesLib
   )
+
+  target_compile_options (LLVMMLBridge PUBLIC -frtti -fexceptions)
+
 
   target_include_directories(LLVMMLBridge SYSTEM PRIVATE ${Protobuf_INCLUDE_DIRS} ${TENSORFLOW_AOT_PATH}/include)
   target_include_directories(LLVMMLBridge PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)

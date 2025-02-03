@@ -56,5 +56,5 @@ target_link_directories(ONNXModelRunnerLib PUBLIC ${ONNXRUNTIME_ROOTDIR}/lib)
 target_link_libraries(ONNXModelRunnerLib PRIVATE onnxruntime)
 
 find_package(Torch REQUIRED)
-target_link_libraries(ONNXModelRunnerLib PRIVATE ${TORCH_LIBRARIES})
-target_compile_options (ONNXModelRunnerLib PRIVATE -frtti -fexceptions)
+target_link_libraries(ONNXModelRunnerLib PUBLIC ${TORCH_LIBRARIES})
+target_compile_options (ONNXModelRunnerLib PUBLIC -frtti -fexceptions)
