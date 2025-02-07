@@ -34,14 +34,14 @@ if (NOT TENSORFLOW_AOT_PATH STREQUAL "")
     endif()
 endif()
 
-add_library(ModelRunnerCLib OBJECT PipeModelRunner.cpp)
+add_library(ModelRunnerCLib OBJECT MLModelRunner.cpp PipeModelRunner.cpp)
 target_link_libraries(ModelRunnerCLib PUBLIC ModelRunnerCUtils ONNXModelRunnerLib)
 target_compile_definitions(ModelRunnerCLib PRIVATE C_LIBRARY)
 
 if(LLVM_MLBRIDGE)
-  add_llvm_library(ModelRunnerLib PipeModelRunner.cpp)
+  add_llvm_library(ModelRunnerLib MLModelRunner.cpp PipeModelRunner.cpp)
 else()
-  add_library(ModelRunnerLib OBJECT PipeModelRunner.cpp)
+  add_library(ModelRunnerLib OBJECT MLModelRunner.cpp PipeModelRunner.cpp)
 endif(LLVM_MLBRIDGE)
 
 target_link_libraries(ModelRunnerLib PUBLIC ModelRunnerUtils ONNXModelRunnerLib)

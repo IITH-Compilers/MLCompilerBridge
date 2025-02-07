@@ -4,14 +4,14 @@ project(MLCompilerBridge VERSION 0.0.2)
 add_compile_options("$<$<CONFIG:${CMAKE_BUILD_TYPE}>:-UNDEBUG>")
 set(protobuf_MODULE_COMPATIBLE TRUE)
 find_package(Protobuf CONFIG REQUIRED)
-# set(protobuf_MODULE_COMPATIBLE TRUE)
-# find_package(Protobuf CONFIG REQUIRED)
+set(protobuf_MODULE_COMPATIBLE TRUE)
+find_package(Protobuf CONFIG REQUIRED)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib CACHE PATH "Output directory for static libraries")
 
 include_directories(${Protobuf_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/include)
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti -fPIC")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -frtti -fPIC")
 set (CMAKE_CXX_STANDARD 17)
 
 option(LLVM_MLBRIDGE "MLCompilerBridge install for LLVM" OFF)
@@ -62,7 +62,7 @@ if(LLVM_MLBRIDGE)
   target_compile_options (LLVMMLBridge PUBLIC -frtti -fexceptions)
 
 
-  target_include_directories(LLVMMLBridge SYSTEM PRIVATE ${Protobuf_INCLUDE_DIRS} ${TENSORFLOW_AOT_PATH}/include)
+  target_include_directories(LLVMMLBridge SYSTEM PUBLIC ${Protobuf_INCLUDE_DIRS} ${TENSORFLOW_AOT_PATH}/include)
   target_include_directories(LLVMMLBridge PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
   install(TARGETS LLVMMLBridge DESTINATION lib)
   add_custom_command(TARGET LLVMMLBridge

@@ -21,8 +21,15 @@ else()
 endif()
 
 target_include_directories(SerDesLib PUBLIC ${TENSORFLOW_AOT_PATH}/include)
-target_link_libraries(SerDesLib PRIVATE tf_xla_runtime)
+target_link_libraries(SerDesLib PUBLIC tf_xla_runtime)
 
 find_package(Torch REQUIRED)
 target_link_libraries(SerDesLib PUBLIC ${TORCH_LIBRARIES})
 target_compile_options(SerDesLib PUBLIC -frtti -fexceptions)
+
+# Testing
+message("PROTOBUF INCLUDES FROM ${Protobuf_INCLUDE_DIRS}")
+target_include_directories(SerDesLib
+ PRIVATE ${CMAKE_BINARY_DIR}/include/Service
+ PUBLIC ${Protobuf_INCLUDE_DIRS}
+)

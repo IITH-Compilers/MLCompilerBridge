@@ -37,8 +37,8 @@
 #define ML_MODEL_RUNNER_H
 
 #include "SerDes/baseSerDes.h"
-#include "SerDes/bitstreamSerDes.h"
-#include "SerDes/jsonSerDes.h"
+// #include "SerDes/bitstreamSerDes.h"
+// #include "SerDes/jsonSerDes.h"
 
 #include <cstdlib>
 #include <future>
@@ -47,9 +47,9 @@
 #include <type_traits>
 
 #ifndef C_LIBRARY
-#include "SerDes/protobufSerDes.h"
-#include "SerDes/tensorflowSerDes.h"
-#include "SerDes/pytorchSerDes.h" 
+// #include "SerDes/protobufSerDes.h"
+// #include "SerDes/tensorflowSerDes.h"
+// #include "SerDes/pytorchSerDes.h" 
 #endif
 namespace MLBridge {
 
@@ -143,30 +143,31 @@ protected:
   std::unique_ptr<BaseSerDes> SerDes;
 
 private:
-  void initSerDes() {
-    switch (SerDesType) {
-    case BaseSerDes::Kind::Json:
-      SerDes = std::make_unique<JsonSerDes>();
-      break;
-    case BaseSerDes::Kind::Bitstream:
-      SerDes = std::make_unique<BitstreamSerDes>();
-      break;
-    case BaseSerDes::Kind::Pytorch:
-      SerDes = std::make_unique<PytorchSerDes>();
-      break;
-#ifndef C_LIBRARY
-    case BaseSerDes::Kind::Protobuf:
-      SerDes = std::make_unique<ProtobufSerDes>();
-      break;
-    case BaseSerDes::Kind::Tensorflow:
-      SerDes = std::make_unique<TensorflowSerDes>();
-      break;
-#endif
-    case BaseSerDes::Kind::Unknown:
-      SerDes = nullptr;
-      break;
-    }
-  }
+  void initSerDes();
+//   void initSerDes() {
+//     switch (SerDesType) {
+//     case BaseSerDes::Kind::Json:
+//       SerDes = std::make_unique<JsonSerDes>();
+//       break;
+//     case BaseSerDes::Kind::Bitstream:
+//       SerDes = std::make_unique<BitstreamSerDes>();
+//       break;
+//     case BaseSerDes::Kind::Pytorch:
+//       SerDes = std::make_unique<PytorchSerDes>();
+//       break;
+// #ifndef C_LIBRARY
+//     case BaseSerDes::Kind::Protobuf:
+//       SerDes = std::make_unique<ProtobufSerDes>();
+//       break;
+//     case BaseSerDes::Kind::Tensorflow:
+//       SerDes = std::make_unique<TensorflowSerDes>();
+//       break;
+// #endif
+//     case BaseSerDes::Kind::Unknown:
+//       SerDes = nullptr;
+//       break;
+//     }
+//   }
 };
 } // namespace MLBridge
 
