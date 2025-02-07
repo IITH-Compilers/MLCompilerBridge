@@ -22,6 +22,7 @@
 #include "google/protobuf/extension_set.h"
 #include "google/protobuf/message.h"
 #include "llvm/Support/raw_ostream.h"
+#include "SerDes/TensorSpec.h"
 
 #include <cassert>
 #include <map>
