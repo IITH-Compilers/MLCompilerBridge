@@ -59,7 +59,6 @@ if(LLVM_MLBRIDGE)
   SerDesLib
   )
 
-  target_compile_options (LLVMMLBridge PUBLIC -frtti -fexceptions)
 
 
   target_include_directories(LLVMMLBridge SYSTEM PUBLIC ${Protobuf_INCLUDE_DIRS} ${TENSORFLOW_AOT_PATH}/include)

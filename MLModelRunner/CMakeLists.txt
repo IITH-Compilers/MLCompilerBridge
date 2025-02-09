@@ -52,5 +52,5 @@ endif()
 set_property(TARGET ModelRunnerLib PROPERTY POSITION_INDEPENDENT_CODE 1)
 
 find_package(Torch REQUIRED)
-target_link_libraries(ModelRunnerLib PUBLIC ${TORCH_LIBRARIES})
-target_compile_options (ModelRunnerLib PUBLIC -frtti -fexceptions)
+target_link_libraries(ModelRunnerLib PRIVATE ${TORCH_LIBRARIES})
+target_compile_options (ModelRunnerLib PRIVATE -fexceptions)
