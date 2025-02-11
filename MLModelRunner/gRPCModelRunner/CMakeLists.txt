@@ -1,6 +1,5 @@
 set(protobuf_MODULE_COMPATIBLE TRUE)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-find_package(Torch REQUIRED)
 find_package(Protobuf CONFIG REQUIRED)
 set(_PROTOBUF_LIBPROTOBUF protobuf::libprotobuf)
 set(_REFLECTION gRPC::grpc++_reflection)
@@ -97,11 +96,9 @@ target_link_libraries(gRPCModelRunnerLib
 	  PRIVATE ${_REFLECTION}
 	          ${_GRPC_GRPCPP}
 	          ${_PROTOBUF_LIBPROTOBUF}
-            "${TORCH_LIBRARIES}"
 )
 
 target_include_directories(gRPCModelRunnerLib
   PRIVATE ${CMAKE_BINARY_DIR}/include/Service
-  PRIVATE ${Protobuf_INCLUDE_DIRS}
+  PUBLIC ${Protobuf_INCLUDE_DIRS}
 )
-set_property(TARGET gRPCModelRunnerLib PROPERTY CXX_STANDARD 17)

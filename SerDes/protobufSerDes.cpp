@@ -23,8 +23,6 @@
 #include <type_traits>
 #include <vector>
 
-using namespace google::protobuf;
-
 namespace MLBridge {
 inline void ProtobufSerDes::setFeature(const std::string &name,
                                        const int value) {

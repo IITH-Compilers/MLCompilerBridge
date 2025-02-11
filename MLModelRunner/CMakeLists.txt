@@ -1,4 +1,3 @@
-find_package(Torch REQUIRED)  
 add_subdirectory(Utils)
 set(PROTOS_DIRECTORY "" CACHE PATH "Path to the directory containing the proto files")
 if(NOT PROTOS_DIRECTORY STREQUAL "")
@@ -6,6 +5,7 @@ if(NOT PROTOS_DIRECTORY STREQUAL "")
 endif()
 add_subdirectory(ONNXModelRunner)
 add_subdirectory(C)
+find_package(Torch REQUIRED)
 
 # # For up-to-date instructions for installing the TFLite dependency, refer to
 # # the bot setup script: https://github.com/google/ml-compiler-opt/blob/main/buildbot/buildbot_init.sh
@@ -36,7 +36,7 @@ if (NOT TENSORFLOW_AOT_PATH STREQUAL "")
 endif()
 
 add_library(ModelRunnerCLib OBJECT PipeModelRunner.cpp)
-target_link_libraries(ModelRunnerCLib PRIVATE ModelRunnerCUtils ONNXModelRunnerLib)
+target_link_libraries(ModelRunnerCLib PUBLIC ModelRunnerCUtils ONNXModelRunnerLib)
 target_compile_definitions(ModelRunnerCLib PRIVATE C_LIBRARY)
 
 if(LLVM_MLBRIDGE)
@@ -45,11 +45,12 @@ else()
   add_library(ModelRunnerLib OBJECT PipeModelRunner.cpp)
 endif(LLVM_MLBRIDGE)
 
-target_link_libraries(ModelRunnerLib PRIVATE ModelRunnerUtils ONNXModelRunnerLib "${TORCH_LIBRARIES}")
-
+target_link_libraries(ModelRunnerLib PUBLIC ModelRunnerUtils ONNXModelRunnerLib)
 
 if(NOT PROTOS_DIRECTORY STREQUAL "")
-  target_link_libraries(ModelRunnerLib PRIVATE gRPCModelRunnerLib)
+  target_link_libraries(ModelRunnerLib PUBLIC gRPCModelRunnerLib)
 endif()
 set_property(TARGET ModelRunnerLib PROPERTY POSITION_INDEPENDENT_CODE 1)
-set_property(TARGET ModelRunnerLib PROPERTY CXX_STANDARD 17)
+
+find_package(Torch REQUIRED)
+target_link_libraries(ModelRunnerLib PUBLIC ${TORCH_LIBRARIES})
