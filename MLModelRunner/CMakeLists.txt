@@ -4,6 +4,7 @@ if(NOT PROTOS_DIRECTORY STREQUAL "")
   add_subdirectory(gRPCModelRunner)
 endif()
 add_subdirectory(ONNXModelRunner)
+add_subdirectory(PTModelRunner)
 add_subdirectory(C)
 
 # # For up-to-date instructions for installing the TFLite dependency, refer to
@@ -44,13 +45,8 @@ else()
   add_library(ModelRunnerLib OBJECT MLModelRunner.cpp PipeModelRunner.cpp)
 endif(LLVM_MLBRIDGE)
 
-target_link_libraries(ModelRunnerLib PUBLIC ModelRunnerUtils ONNXModelRunnerLib)
+target_link_libraries(ModelRunnerLib PUBLIC ModelRunnerUtils ONNXModelRunnerLib PTModelRunnerLib)
 
 if(NOT PROTOS_DIRECTORY STREQUAL "")
   target_link_libraries(ModelRunnerLib PUBLIC gRPCModelRunnerLib)
 endif()
-set_property(TARGET ModelRunnerLib PROPERTY POSITION_INDEPENDENT_CODE 1)
-
-find_package(Torch REQUIRED)
-target_link_libraries(ModelRunnerLib PRIVATE ${TORCH_LIBRARIES})
-target_compile_options (ModelRunnerLib PRIVATE -fexceptions)

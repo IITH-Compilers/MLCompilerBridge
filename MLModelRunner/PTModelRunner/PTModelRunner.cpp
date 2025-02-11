@@ -36,7 +36,7 @@ namespace MLBridge
   void *PTModelRunner::evaluateUntyped()
   {
 
-    if ((*static_cast<TensorVec*>(this->SerDes->getRequest())).empty())
+    if ((*reinterpret_cast<TensorVec*>(this->SerDes->getRequest())).empty())
     {
       llvm::errs() << "Input vector is empty.\n";
       return nullptr;
@@ -45,8 +45,8 @@ namespace MLBridge
     try
     {
       
-      std::vector<torch::Tensor> *outputTensors = static_cast<std::vector<torch::Tensor>*>(this->SerDes->getResponse());
-      auto outputs = static_cast<torch::inductor::AOTIModelContainerRunnerCpu*>(this->CompiledModel)->run((*static_cast<TensorVec*>(this->SerDes->getRequest())));
+      std::vector<torch::Tensor> *outputTensors = reinterpret_cast<std::vector<torch::Tensor>*>(this->SerDes->getResponse());
+      auto outputs = reinterpret_cast<torch::inductor::AOTIModelContainerRunnerCpu*>(this->CompiledModel)->run((*reinterpret_cast<TensorVec*>(this->SerDes->getRequest())));
       for (auto i = outputs.begin(); i != outputs.end(); ++i)
         (*(outputTensors)).push_back(*i);
       void *rawData = this->SerDes->deserializeUntyped(outputTensors);
